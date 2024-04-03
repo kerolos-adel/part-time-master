@@ -6,7 +6,7 @@ class Persistent{
     'Business',
     'Information Technology',
     'Human Resourses',
-    'Markting',
+    'Marketing',
     'Design',
   ];
 }

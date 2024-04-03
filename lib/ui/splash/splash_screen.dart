@@ -4,6 +4,7 @@ import 'package:part_time/constants/assets/assets.dart';
 import 'package:part_time/shared/preferences/cache_helper.dart';
 import 'package:part_time/shared/styles/colors.dart';
 import 'package:part_time/ui/company_layout/company_layout_screen.dart';
+import 'package:part_time/ui/login/login_screen.dart';
 import 'package:part_time/ui/start_language/start_language_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -24,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
     print(CacheHelper.getData(key: "onboarding"));
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context){
       if(CacheHelper.getData(key: "onboarding") == true){
-        return const CompanyLayoutScreen();
+        return const LoginScreen();
       }
       else {
         return const StartLanguageScreen();

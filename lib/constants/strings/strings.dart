@@ -47,17 +47,24 @@ dynamic EnglishStrings = {
   "locationEmptyError" : "Location should not be empty",
   "phoneNumber" : "Phone Number",
   "phoneNumberEmptyError" : "Phone Number should not be empty",
-
   "myJobs" : "My Jobs",
   "archived" : "Archived",
-
   "description" : "Description",
   "requirements" : "Requirements",
   "benefits" : "Benefits",
   "salary" : "Salary",
   "deadline" : "Deadline",
   "contactInfo" : "Contact Info",
-
+  "chooseOption" : "Choose an Option",
+  "camera" : "Camera",
+  "gallery" : "Gallery",
+  "fieldMissing" : "This Field is missing",
+  "registerNameHint" : "Full name / Company name",
+  "enterValidEmail" : "Enter a valid Email address",
+  "enterValidPassword" : "Enter a valid password",
+  "enterValidPhone" : "Enter a valid phone number",
+  "enterValidAddress" : "Enter a valid address",
+  "address" : "Address",
 };
 
 dynamic ArabicStrings = {
@@ -108,14 +115,22 @@ dynamic ArabicStrings = {
   "locationEmptyError" : "لا يجب ان يكون الموقع فارغا",
   "phoneNumber" : "رقم التليفون",
   "phoneNumberEmptyError" : "لا يجب ان يكون رقم الهاتف فارغا",
-
   "myJobs" : "وظائفي",
   "archived" : "أرشيف",
-
   "description" : "الوصف",
   "requirements" : "المتطلبات",
   "benefits" : "الفوائد",
   "salary" : "الراتب",
   "deadline" : "اخر موعد للتقديم",
   "contactInfo" : "معلومات التواصل",
+  "chooseOption" : "اختر خيار",
+  "camera" : "كاميرا",
+  "gallery" : "المعرض",
+  "fieldMissing" : "المكان مفقود",
+  "registerNameHint" : "الاسم كامل / اسم الشركه",
+  "enterValidEmail" : "ادخل بريد الكتروني صالح",
+  "enterValidPassword" : "ادخل كلمه مرور صالحه",
+  "enterValidPhone" : "ادخل رقم محمول صالح",
+  "enterValidAddress" : "ادخل عنوان صالح",
+  "address" : "عنوان",
 };

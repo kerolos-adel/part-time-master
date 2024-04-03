@@ -17,11 +17,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
 
   void submit(context, value){
-    CacheHelper.saveData(key: "language", value: value).then((value){
-      if(value){
-        Navigator.pop(context);
-      }
-    });
+    CacheHelper.saveData(key: "language", value: value);
   }
 
   @override

@@ -52,13 +52,13 @@ class _RegisterScreenState extends State<RegisterScreen>
     super.initState();
   }
 
-  void _showImageDialog() {
+  void _showImageDialog(context) {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text(
-            "Please choose an option",
+          title: Text(
+            SettingsCubit.get(context).currentLanguage["chooseOption"],
             style: TextStyle(fontSize: 20),
           ),
           content: Column(
@@ -68,7 +68,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                 onTap: () {
                   _getFromCamera();
                 },
-                child: const Row(
+                child: Row(
                   children: [
                     Padding(
                       padding: EdgeInsets.all(4),
@@ -78,7 +78,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                       ),
                     ),
                     Text(
-                      'camera',
+                      SettingsCubit.get(context).currentLanguage["camera"],
                       style: TextStyle(color: Colors.purple),
                     )
                   ],
@@ -88,7 +88,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                 onTap: () {
                   _getFromGallery();
                 },
-                child: const Row(
+                child: Row(
                   children: [
                     Padding(
                       padding: EdgeInsets.all(4),
@@ -98,7 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                       ),
                     ),
                     Text(
-                      'Gallery',
+                      SettingsCubit.get(context).currentLanguage["gallery"],
                       style: TextStyle(color: Colors.purple),
                     )
                   ],
@@ -172,7 +172,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                                   children: [
                                     GestureDetector(
                                       onTap: () {
-                                        _showImageDialog();
+                                        _showImageDialog(context);
                                       },
                                       child: Padding(
                                         padding: const EdgeInsets.all(8),
@@ -211,19 +211,19 @@ class _RegisterScreenState extends State<RegisterScreen>
                                           .NameController,
                                       validator: (value) {
                                         if (value!.isEmpty) {
-                                          return "This Field is missing";
+                                          return SettingsCubit.get(context).currentLanguage["fieldMissing"];
                                         } else {
                                           return null;
                                         }
                                       },
                                       style:
-                                          const TextStyle(color: Colors.white),
-                                      decoration: const InputDecoration(
+                                           TextStyle(color: Colors.white),
+                                      decoration:  InputDecoration(
                                           suffixIcon: Icon(
                                             Icons.drive_file_rename_outline,
                                             color: Colors.white,
                                           ),
-                                          hintText: "Full name / Company name",
+                                          hintText: SettingsCubit.get(context).currentLanguage["registerNameHint"],
                                           hintStyle:
                                               TextStyle(color: Colors.white),
                                           enabledBorder: UnderlineInputBorder(
@@ -245,19 +245,18 @@ class _RegisterScreenState extends State<RegisterScreen>
                                       validator: (value) {
                                         if (value!.isEmpty ||
                                             !value.contains('@')) {
-                                          return "please enter a valid Email address";
+                                          return SettingsCubit.get(context).currentLanguage["enterValidEmail"];
                                         } else {
                                           return null;
                                         }
                                       },
-                                      style:
-                                          const TextStyle(color: Colors.white),
-                                      decoration: const InputDecoration(
+                                      style: TextStyle(color: Colors.white),
+                                      decoration: InputDecoration(
                                           suffixIcon: Icon(
                                             Icons.email,
                                             color: Colors.white,
                                           ),
-                                          hintText: "Email",
+                                          hintText: SettingsCubit.get(context).currentLanguage["email"],
                                           hintStyle:
                                               TextStyle(color: Colors.white),
                                           enabledBorder: UnderlineInputBorder(
@@ -282,7 +281,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                                       validator: (value) {
                                         if (value!.isEmpty ||
                                             value.length < 6) {
-                                          return "please enter a valid password";
+                                          return SettingsCubit.get(context).currentLanguage["enterValidPassword"];
                                         } else {
                                           return null;
                                         }
@@ -306,7 +305,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                                               color: Colors.white,
                                             ),
                                           ),
-                                          hintText: "Password",
+                                          hintText: SettingsCubit.get(context).currentLanguage["password"],
                                           hintStyle:
                                               const TextStyle(color: Colors.white),
                                           enabledBorder: const UnderlineInputBorder(
@@ -327,19 +326,19 @@ class _RegisterScreenState extends State<RegisterScreen>
                                           .PhoneController,
                                       validator: (value) {
                                         if (value!.isEmpty) {
-                                          return "please enter a valid phone number";
+                                          return SettingsCubit.get(context).currentLanguage["enterValidPhone"];
                                         } else {
                                           return null;
                                         }
                                       },
                                       style:
                                           const TextStyle(color: Colors.white),
-                                      decoration: const InputDecoration(
+                                      decoration: InputDecoration(
                                           suffixIcon: Icon(
                                             Icons.phone,
                                             color: Colors.white,
                                           ),
-                                          hintText: "Phone Number",
+                                          hintText: SettingsCubit.get(context).currentLanguage["phoneNumber"],
                                           hintStyle:
                                               TextStyle(color: Colors.white),
                                           enabledBorder: UnderlineInputBorder(
@@ -360,19 +359,19 @@ class _RegisterScreenState extends State<RegisterScreen>
                                           .LocationController,
                                       validator: (value) {
                                         if (value!.isEmpty) {
-                                          return "please enter a valid address";
+                                          return SettingsCubit.get(context).currentLanguage["enterValidAddress"];
                                         } else {
                                           return null;
                                         }
                                       },
                                       style:
                                           const TextStyle(color: Colors.white),
-                                      decoration: const InputDecoration(
+                                      decoration: InputDecoration(
                                           suffixIcon: Icon(
                                             Icons.location_on,
                                             color: Colors.white,
                                           ),
-                                          hintText: "Address",
+                                          hintText: SettingsCubit.get(context).currentLanguage["address"],
                                           hintStyle:
                                               TextStyle(color: Colors.white),
                                           enabledBorder: UnderlineInputBorder(
