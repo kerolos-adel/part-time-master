@@ -6,7 +6,6 @@ import 'package:part_time/constants/assets/assets.dart';
 import 'package:part_time/cubit/login/cubit.dart';
 import 'package:part_time/cubit/login/states.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
-import 'package:part_time/ui/explore/explore_screen.dart';
 import 'package:part_time/ui/person_layout/person_layout_screen.dart';
 import 'package:part_time/ui/register/register_screen.dart';
 
@@ -169,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen>
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const ExploreScreen()));
+                                            const PersonLayoutScreen()));
                               } else {
                                 print("Error");
                               }
@@ -204,18 +203,18 @@ class _LoginScreenState extends State<LoginScreen>
                           Center(
                             child: RichText(
                               text: TextSpan(children: [
-                                TextSpan(
-                                    text: SettingsCubit.get(context).currentLanguage["doNotHaveAccount"],
+                                const TextSpan(
+                                    text: "Do not have an account?",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16
                                     )),
-                                TextSpan(text: '   '),
+                                const TextSpan(text: '   '),
                                 TextSpan(
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = ()=>Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterScreen(),)),
-                                    text: SettingsCubit.get(context).currentLanguage["register"],
+                                    text: "Signup",
                                     style: const TextStyle(
                                         color: Colors.cyan,
                                         fontWeight: FontWeight.bold,

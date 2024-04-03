@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_time/cubit/layout/states.dart';
 import 'package:part_time/ui/archived/archived_screen.dart';
-import 'package:part_time/ui/explore/explore_screen.dart';
+import 'package:part_time/ui/explore/explore_client_screen.dart';
 import 'package:part_time/ui/my_jobs/my_jobs_screen.dart';
 import 'package:part_time/ui/saved/saved_screen.dart';
 
@@ -13,7 +13,7 @@ class LayoutCubit extends Cubit<LayoutStates>{
 
   int currentIndex = 0;
   List<Widget>person_screens = [
-    const ExploreScreen(),
+    const ExploreClientScreen(),
     const SavedScreen(),
   ];
   List<Widget>company_screens = [

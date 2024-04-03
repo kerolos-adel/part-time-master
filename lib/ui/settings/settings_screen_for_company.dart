@@ -5,16 +5,16 @@ import 'package:part_time/cubit/settings/states.dart';
 import 'package:part_time/shared/preferences/cache_helper.dart';
 import 'package:part_time/shared/styles/colors.dart';
 
-import '../../Widgets/bottom_nav_bar.dart';
+import '../../Widgets/bottom_nav_bar_for_company.dart';
 
-class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key});
+class SettingsCompanyScreen extends StatefulWidget {
+  const SettingsCompanyScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
+  State<SettingsCompanyScreen> createState() => _SettingsCompanyScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _SettingsCompanyScreenState extends State<SettingsCompanyScreen> {
 
   void submit(context, value){
     CacheHelper.saveData(key: "language", value: value);
@@ -36,7 +36,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   )
               ),
               child:Scaffold(
-                bottomNavigationBar: BottomNavigationBarForApp(indexNum:3),
+                bottomNavigationBar: BottomNavigationBarForComapny(indexNum:3),
 
                 backgroundColor: Colors.transparent,
                 appBar: AppBar(

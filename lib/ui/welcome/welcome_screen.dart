@@ -4,7 +4,8 @@ import 'package:part_time/cubit/settings/cubit.dart';
 import 'package:part_time/models/boarding/boarding_model.dart';
 import 'package:part_time/shared/preferences/cache_helper.dart';
 import 'package:part_time/shared/styles/colors.dart';
-import 'package:part_time/ui/register/register_screen.dart';
+import 'package:part_time/ui/login/choose_login.dart';
+import 'package:part_time/ui/register/register_as_client.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 
@@ -26,7 +27,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context) => const RegisterScreen()),
+              builder: (context) => const ChooseLogin()),
               (route) => false,
         );
       }

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:part_time/Persistent/Presistent.dart';
 
-import '../../Widgets/bottom_nav_bar.dart';
+import '../../Widgets/bootom_nav_bar_client.dart';
+import '../../Widgets/bottom_nav_bar_for_company.dart';
 
 class AddJobScreen extends StatefulWidget {
   const AddJobScreen({super.key});
@@ -153,7 +154,7 @@ class _AddJobScreenState extends State<AddJobScreen> {
                 end: Alignment.centerRight,
                 stops: [.2, .9])),
         child: Scaffold(
-          bottomNavigationBar: BottomNavigationBarForApp(indexNum: 2),
+          bottomNavigationBar: BottomNavigationBarForComapny(indexNum: 2),
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             flexibleSpace: Container(

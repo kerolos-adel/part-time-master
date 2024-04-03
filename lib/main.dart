@@ -9,9 +9,6 @@ import 'package:part_time/cubit/register/cubit.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
 import 'package:part_time/shared/preferences/cache_helper.dart';
 import 'package:part_time/ui/explore/explore_screen.dart';
-import 'package:part_time/ui/login/login_screen.dart';
-
-import 'ui/splash/splash_screen.dart';
 
 
 void main() async {
@@ -60,7 +57,7 @@ class MyApp extends StatelessWidget {
     }
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: ExploreScreen(),
     );
   }
 }
