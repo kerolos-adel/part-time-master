@@ -78,8 +78,8 @@ class _LoginAsClientScreenState extends State<LoginAsClientScreen>
                   size: 40,
                   color: Colors.white,
                 )),
-            title: const Text(
-              "Login as Client",
+            title:  Text(
+              SettingsCubit.get(context).currentLanguage["clientLogin"],
               style: TextStyle(color: Colors.white),
             ),
             centerTitle: true,
@@ -237,8 +237,8 @@ class _LoginAsClientScreenState extends State<LoginAsClientScreen>
                             Center(
                               child: RichText(
                                 text: TextSpan(children: [
-                                  const TextSpan(
-                                      text: "Do not have an account?",
+                                  TextSpan(
+                                      text: SettingsCubit.get(context).currentLanguage["doNotHaveAccount"],
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -248,7 +248,7 @@ class _LoginAsClientScreenState extends State<LoginAsClientScreen>
                                   TextSpan(
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = ()=>Navigator.push(context, MaterialPageRoute(builder: (context) => const ChooseRegister(),)),
-                                      text: "Signup",
+                                      text: SettingsCubit.get(context).currentLanguage["register"],
                                       style: const TextStyle(
                                           color: Colors.cyan,
                                           fontWeight: FontWeight.bold,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:part_time/Widgets/bottom_nav_bar.dart';
+import 'package:part_time/Widgets/bootom_nav_bar_client.dart';
+import 'package:part_time/Widgets/bottom_nav_bar_for_company.dart';
 import 'package:part_time/Widgets/job_widget.dart';
 import 'package:part_time/constants/values/values.dart';
 import 'package:part_time/cubit/explore/cubit.dart';
@@ -11,26 +12,26 @@ import 'package:part_time/shared/styles/colors.dart';
 import 'package:part_time/ui/job_details/job_details_screen.dart';
 
 import '../../Persistent/Presistent.dart';
-import '../search/search_screen.dart';
+import '../search/search_client_screen.dart';
 
-class ExploreScreen extends StatefulWidget {
-  const ExploreScreen({super.key});
+class ExploreClientScreen extends StatefulWidget {
+  const ExploreClientScreen({super.key});
 
   @override
-  State<ExploreScreen> createState() => _ExploreScreenState();
+  State<ExploreClientScreen> createState() => _ExploreClientScreenState();
 }
 
-class _ExploreScreenState extends State<ExploreScreen> {
+class _ExploreClientScreenState extends State<ExploreClientScreen> {
   String?jobCategoryFilter;
 
-  _showTaskCategoriesDialog() {
+  _showTaskCategoriesDialog(context) {
     showDialog(
       context: context,
       builder: (ctx) {
         return AlertDialog(
           backgroundColor: Colors.black54,
-          title: const Text(
-            'Job Category',
+          title: Text(
+            SettingsCubit.get(context).currentLanguage["jobCategory"],
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 20, color: Colors.white),
           ),
@@ -69,7 +70,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
             TextButton(onPressed: () {
               Navigator.canPop(context) ? Navigator.pop(context) : null;
             },
-                child: Text('Close',
+                child: Text(
+                  SettingsCubit.get(context).currentLanguage["close"],
                   style: TextStyle(color: Colors.white, fontSize: 16),)),
             TextButton(onPressed: () {
               setState(() {
@@ -77,7 +79,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
               });
               Navigator.canPop(context) ? Navigator.pop(context) : null;
             },
-                child: Text('Cancel Filter',
+                child: Text(
+                  SettingsCubit.get(context).currentLanguage["cancelFilter"],
                   style: TextStyle(color: Colors.white, fontSize: 16),)),
           ],
         );
@@ -101,7 +104,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 )
             ),
             child: Scaffold(
-                bottomNavigationBar: BottomNavigationBarForApp(indexNum: 0),
+                bottomNavigationBar: BottomNavigationBarForClient(indexNum: 0),
                 appBar: AppBar(
                   flexibleSpace: Container(
                     decoration: const BoxDecoration(
@@ -114,18 +117,19 @@ class _ExploreScreenState extends State<ExploreScreen> {
                             stops: [.2, .9]
                         )
                     ),),
-                  title: const Text(
-                    "Jobs Screen", style: TextStyle(color: Colors.white),),
+                  title: Text(
+                    SettingsCubit.get(context).currentLanguage["jobs"],
+                    style: TextStyle(color: Colors.white),),
                   centerTitle: true,
                   leading: IconButton(onPressed: () {
-                    _showTaskCategoriesDialog();
+                    _showTaskCategoriesDialog(context);
                   },
                       icon: const Icon(
                         Icons.filter_list_rounded, color: Colors.black,)),
                   actions: [
                     IconButton(onPressed: () {
                       Navigator.pushReplacement(context, MaterialPageRoute(
-                        builder: (context) => SearchScreen(),));
+                        builder: (context) => SearchClientScreen(),));
                     }, icon: const Icon(Icons.search_outlined, color: Colors.black,))
                   ],
                 ),
@@ -141,7 +145,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       name: "kerolos",
                       recruitment: "recruitment",
                       email: "kerolos@gmail.com",
-                      location: "asyut",);
+                      location: "Kuwait",);
                   },)
             ),
           );

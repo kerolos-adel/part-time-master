@@ -3,8 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
 import 'package:part_time/cubit/settings/states.dart';
-import 'package:part_time/models/job/job_model.dart';
-import 'package:part_time/ui/explore/explore_client_screen.dart';
+
 
 class JobDetailsScreen extends StatefulWidget {
   const JobDetailsScreen({super.key});
@@ -32,7 +31,6 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
   }
 
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -57,22 +55,13 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
             ),
             leading: IconButton(
                 onPressed: () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ExploreClientScreen(),
-                      ));
+                  Navigator.pop(context);
                 },
                 icon: const Icon(
                   Icons.close,
                   size: 40,
                   color: Colors.white,
                 )),
-            title: const Text(
-              "All Works Screen",
-              style: TextStyle(color: Colors.white),
-            ),
-            centerTitle: true,
           ),
           body: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -137,7 +126,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                       height: 5,
                                     ),
                                     Text(
-                                      "asyut",
+                                      "Kuwait",
                                       style: TextStyle(color: Colors.grey),
                                     )
                                   ],
@@ -146,14 +135,13 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                             ],
                           ),
                           dividerWidget(),
-                          const Row(
+                          Row(
                             children: [
-
                               SizedBox(
                                 width: 6,
                               ),
                               Text(
-                                'Average Age :',
+                                SettingsCubit.get(context).currentLanguage["averageAge"],
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
@@ -164,17 +152,10 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                 width: 10,
                               ),
                               Text(
-                                "10",
+                                "10 : 20",
                                 style: TextStyle(color: Colors.grey),
                               ),
-                              Text(
-                                " : ",
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                              Text(
-                                "20 years",
-                                style: TextStyle(color: Colors.grey),
-                              ),
+
                             ],
                           ),
                           Column(
@@ -182,7 +163,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                             children: [
                               dividerWidget(),
                               Text(
-                                "Recruitment",
+                                SettingsCubit.get(context).currentLanguage["requirements"],
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
@@ -200,7 +181,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                       child: Text(
                                         "Recruitment",
                                         style: const TextStyle(
-                                          color: Colors.black,
+                                          color: Colors.white,
                                           fontSize: 18,
                                           fontWeight: FontWeight.normal,
                                           fontStyle: FontStyle.italic,
@@ -212,7 +193,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                           ),
                           dividerWidget(),
                           Text(
-                            "Job Description",
+                            SettingsCubit.get(context).currentLanguage["description"],
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 18,
@@ -247,7 +228,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                         children: [
                           Center(
                             child: Text(
-                              'Actevely Recruiting, Send CV/Resume',
+                              SettingsCubit.get(context).currentLanguage["sendCV"],
                               style: TextStyle(
                                   color: Colors.green,
                                   fontWeight: FontWeight.normal,
@@ -268,7 +249,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                 padding: EdgeInsets.symmetric(
                                     vertical: 18, horizontal: 14),
                                 child: Text(
-                                  "Easy Apply Now",
+                                  SettingsCubit.get(context).currentLanguage["applyNow"],
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -282,7 +263,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Uploaded on',
+                                SettingsCubit.get(context).currentLanguage["uploadedOn"],
                                 style: TextStyle(
                                     color: Colors.grey,
                                     fontWeight: FontWeight.bold,
@@ -299,7 +280,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Deadline date',
+                                SettingsCubit.get(context).currentLanguage["deadline"],
                                 style: TextStyle(
                                     color: Colors.grey,
                                     fontWeight: FontWeight.bold,

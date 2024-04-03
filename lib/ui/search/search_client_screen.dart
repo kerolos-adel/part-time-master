@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:part_time/cubit/settings/cubit.dart';
 
 import '../../Widgets/bootom_nav_bar_client.dart';
 import '../../Widgets/bottom_nav_bar_for_company.dart';
@@ -11,6 +12,8 @@ class SearchClientScreen extends StatefulWidget {
 }
 
 class _SearchClientScreenState extends State<SearchClientScreen> {
+
+  var SearchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,10 +43,43 @@ class _SearchClientScreenState extends State<SearchClientScreen> {
                   stops: [.2,.9]
               )
           ),),
-        title: const Text("All Works Screen",style: TextStyle(color: Colors.white),),
+        title: Text(
+          SettingsCubit.get(context).currentLanguage["jobSearch"],
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
       ),
-
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Column(
+          children: [
+            TextFormField(
+              controller: SearchController,
+              style: TextStyle(color: Colors.white),
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.black54,
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                ),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                ),
+                errorBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.red),
+                ),
+                hintText: SettingsCubit.get(context).currentLanguage["searchHintText"],
+                hintStyle: TextStyle(
+                  color: Colors.grey,
+                )
+              ),
+            ),
+            SizedBox(height: 20,),
+            ElevatedButton(onPressed: (){}, child: Text(SettingsCubit.get(context).currentLanguage["search"])),
+          ],
+        ),
+      ),
     ));
   }
 }

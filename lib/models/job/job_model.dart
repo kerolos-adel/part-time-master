@@ -3,25 +3,25 @@ class Job {
   String companyName;
   String location;
   String description;
-  String salary;
   String requirements;
-  String benefits;
   String deadline;
   String contactEmail;
   String contactPhone;
-  bool isSaved = false;
+  String applyLink;
+  int ageFrom;
+  int ageTo;
 
   Job({
     required this.location,
-    required this.benefits,
     required this.companyName,
     required this.contactEmail,
     required this.contactPhone,
     required this.deadline,
     required this.description,
     required this.requirements,
-    required this.salary,
     required this.title,
-    required this.isSaved,
+    required this.applyLink,
+    required this.ageFrom,
+    required this.ageTo,
   });
 }

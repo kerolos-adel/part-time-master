@@ -13,7 +13,6 @@ import 'package:part_time/ui/job_details/job_details_screen.dart';
 
 import '../../Persistent/Presistent.dart';
 import '../search/search_client_screen.dart';
-import '../search/search_comanpy_screen.dart';
 
 class ExploreCompanyScreen extends StatefulWidget {
   const ExploreCompanyScreen({super.key});
@@ -25,14 +24,14 @@ class ExploreCompanyScreen extends StatefulWidget {
 class _ExploreCompanyScreenState extends State<ExploreCompanyScreen> {
   String?jobCategoryFilter;
 
-  _showTaskCategoriesDialog() {
+  _showTaskCategoriesDialog(context) {
     showDialog(
       context: context,
       builder: (ctx) {
         return AlertDialog(
           backgroundColor: Colors.black54,
-          title: const Text(
-            'Job Category',
+          title: Text(
+            SettingsCubit.get(context).currentLanguage["jobCategory"],
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 20, color: Colors.white),
           ),
@@ -71,7 +70,8 @@ class _ExploreCompanyScreenState extends State<ExploreCompanyScreen> {
             TextButton(onPressed: () {
               Navigator.canPop(context) ? Navigator.pop(context) : null;
             },
-                child: Text('Close',
+                child: Text(
+                  SettingsCubit.get(context).currentLanguage["close"],
                   style: TextStyle(color: Colors.white, fontSize: 16),)),
             TextButton(onPressed: () {
               setState(() {
@@ -79,7 +79,8 @@ class _ExploreCompanyScreenState extends State<ExploreCompanyScreen> {
               });
               Navigator.canPop(context) ? Navigator.pop(context) : null;
             },
-                child: Text('Cancel Filter',
+                child: Text(
+                  SettingsCubit.get(context).currentLanguage["cancelFilter"],
                   style: TextStyle(color: Colors.white, fontSize: 16),)),
           ],
         );
@@ -116,20 +117,15 @@ class _ExploreCompanyScreenState extends State<ExploreCompanyScreen> {
                             stops: [.2, .9]
                         )
                     ),),
-                  title: const Text(
-                    "My Jobs", style: TextStyle(color: Colors.white),),
+                  title: Text(
+                   SettingsCubit.get(context).currentLanguage["myJobs"],
+                    style: TextStyle(color: Colors.white),),
                   centerTitle: true,
                   leading: IconButton(onPressed: () {
-                    _showTaskCategoriesDialog();
+                    _showTaskCategoriesDialog(context);
                   },
                       icon: const Icon(
                         Icons.filter_list_rounded, color: Colors.black,)),
-                  actions: [
-                    IconButton(onPressed: () {
-                      Navigator.pushReplacement(context, MaterialPageRoute(
-                        builder: (context) => SearchComapnyScreen(),));
-                    }, icon: const Icon(Icons.search_outlined, color: Colors.black,))
-                  ],
                 ),
                 backgroundColor: Colors.transparent,
                 body: ListView.builder(
@@ -143,7 +139,7 @@ class _ExploreCompanyScreenState extends State<ExploreCompanyScreen> {
                       name: "kerolos",
                       recruitment: "recruitment",
                       email: "kerolos@gmail.com",
-                      location: "asyut",);
+                      location: "Kuwait",);
                   },)
             ),
           );

@@ -18,11 +18,7 @@ class SettingsClientScreen extends StatefulWidget {
 class _SettingsClientScreenState extends State<SettingsClientScreen> {
 
   void submit(context, value){
-    CacheHelper.saveData(key: "language", value: value).then((value){
-      if(value){
-        Navigator.pop(context);
-      }
-    });
+    CacheHelper.saveData(key: "language", value: value);
   }
 
   @override
@@ -56,7 +52,7 @@ class _SettingsClientScreenState extends State<SettingsClientScreen> {
                             stops: [.2,.9]
                         )
                     ),),
-
+                  title: Text(SettingsCubit.get(context).currentLanguage["settings"], style: TextStyle(color: Colors.white),),
                   centerTitle: true,
                 ),
                 body:  Padding(

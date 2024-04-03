@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:part_time/Persistent/Presistent.dart';
+import 'package:part_time/cubit/settings/cubit.dart';
 
 import '../../Widgets/bootom_nav_bar_client.dart';
 import '../../Widgets/bottom_nav_bar_for_company.dart';
@@ -18,12 +19,14 @@ class _AddJobScreenState extends State<AddJobScreen> {
   final bool _isLoading = false;
 
 
-  final TextEditingController _JobCategoryController = TextEditingController(
-      text: 'Select Job Category');
+  final TextEditingController _JobCategoryController = TextEditingController();
   final TextEditingController _JobTitleController = TextEditingController();
   final TextEditingController _JobDescriptionController = TextEditingController();
+  final TextEditingController _JobAgeController = TextEditingController();
+  final TextEditingController _JobRequirementsController = TextEditingController();
+  final TextEditingController _JobApplyLinkController = TextEditingController();
   final TextEditingController _JobDeadlineController = TextEditingController(
-      text: 'Job Deadline Date');
+      text: 'Deadline Date');
 
   Widget _textTitles({required String lable}) {
     return Padding(
@@ -63,7 +66,7 @@ class _AddJobScreenState extends State<AddJobScreen> {
             maxLines: valueKey == 'JobDescription' ? 3 : 1,
             maxLength: maxLength,
             keyboardType: TextInputType.text,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               filled: true,
               fillColor: Colors.black54,
               enabledBorder: UnderlineInputBorder(
@@ -140,12 +143,8 @@ class _AddJobScreenState extends State<AddJobScreen> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
     return Container(
         decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -154,7 +153,7 @@ class _AddJobScreenState extends State<AddJobScreen> {
                 end: Alignment.centerRight,
                 stops: [.2, .9])),
         child: Scaffold(
-          bottomNavigationBar: BottomNavigationBarForComapny(indexNum: 2),
+          bottomNavigationBar: BottomNavigationBarForComapny(indexNum: 1),
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             flexibleSpace: Container(
@@ -180,12 +179,12 @@ class _AddJobScreenState extends State<AddJobScreen> {
                       const SizedBox(
                         height: 10,
                       ),
-                      const Align(
+                      Align(
                         alignment: Alignment.center,
                         child: Padding(
                           padding: EdgeInsets.all(8),
                           child: Text(
-                            'Please fill all fields',
+                            SettingsCubit.get(context).currentLanguage["fillAllFieldsError"],
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 40,
@@ -201,23 +200,21 @@ class _AddJobScreenState extends State<AddJobScreen> {
                         thickness: 1,
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8),
+                        padding: EdgeInsets.all(8),
                         child: Form(
                             key: _formkey,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _textTitles(lable: 'Job Category :'),
+                                _textTitles(lable: SettingsCubit.get(context).currentLanguage["jobCategory"]),
                                 _textFormFields(
                                   valueKey: 'JobCategory',
                                   controller: _JobCategoryController,
-                                  enabled: false,
-                                  fan: () {
-                                    _showTaskCategoriesDialog();
-                                  },
+                                  enabled: true,
+                                  fan: () {},
                                   maxLength: 100,
                                 ),
-                                _textTitles(lable: 'Job Title :'),
+                                _textTitles(lable: SettingsCubit.get(context).currentLanguage["jobTitle"]),
                                 _textFormFields(
                                   valueKey: 'JobTitle',
                                   controller: _JobTitleController,
@@ -225,7 +222,15 @@ class _AddJobScreenState extends State<AddJobScreen> {
                                   fan: () {},
                                   maxLength: 100,
                                 ),
-                                _textTitles(lable: 'Job Description :'),
+                                _textTitles(lable: SettingsCubit.get(context).currentLanguage["averageAge"]),
+                                _textFormFields(
+                                  valueKey: 'Age',
+                                  controller: _JobAgeController,
+                                  enabled: true,
+                                  fan: () {},
+                                  maxLength: 100,
+                                ),
+                                _textTitles(lable: SettingsCubit.get(context).currentLanguage["jobDescription"]),
                                 _textFormFields(
                                   valueKey: 'JobDescription',
                                   controller: _JobDescriptionController,
@@ -233,7 +238,17 @@ class _AddJobScreenState extends State<AddJobScreen> {
                                   fan: () {},
                                   maxLength: 100,
                                 ),
-                                _textTitles(lable: 'Job Deadline Date :'),
+                                _textTitles(lable: SettingsCubit.get(context).currentLanguage["requirements"]),
+                                _textFormFields(
+                                  valueKey: 'Requirements',
+                                  controller: _JobRequirementsController,
+                                  enabled: true,
+                                  fan: () {
+                                    _pickDateDialog();
+                                  },
+                                  maxLength: 100,
+                                ),
+                                _textTitles(lable: SettingsCubit.get(context).currentLanguage["jobDeadline"]),
                                 _textFormFields(
                                   valueKey: 'Deadline',
                                   controller: _JobDeadlineController,
@@ -242,6 +257,14 @@ class _AddJobScreenState extends State<AddJobScreen> {
                                     _pickDateDialog();
                                   },
                                   maxLength: 100,
+                                ),
+                                _textTitles(lable: SettingsCubit.get(context).currentLanguage["applyLink"]),
+                                _textFormFields(
+                                  valueKey: 'Apply Link',
+                                  controller: _JobApplyLinkController,
+                                  enabled: true,
+                                  fan: () {},
+                                  maxLength: 300,
                                 ),
                               ],
                             )),
@@ -257,7 +280,7 @@ class _AddJobScreenState extends State<AddJobScreen> {
                             elevation: 8,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(13)),
-                            child: const Padding(
+                            child: Padding(
                               padding: EdgeInsets.symmetric(vertical: 14),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -265,7 +288,7 @@ class _AddJobScreenState extends State<AddJobScreen> {
                                 MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'Post Now',
+                                    SettingsCubit.get(context).currentLanguage["post"],
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -291,6 +314,7 @@ class _AddJobScreenState extends State<AddJobScreen> {
               ),
             ),
           ),
-        ));
+        )
+    );
   }
 }

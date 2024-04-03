@@ -53,89 +53,6 @@ class _RegisterAsClientCompanyState extends State<RegisterAsClientCompany>
     super.initState();
   }
 
-  void _showImageDialog() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text(
-            "Please choose an option",
-            style: TextStyle(fontSize: 20),
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              InkWell(
-                onTap: () {
-                  _getFromCamera();
-                },
-                child: const Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(4),
-                      child: Icon(
-                        Icons.camera,
-                        color: Colors.purple,
-                      ),
-                    ),
-                    Text(
-                      'camera',
-                      style: TextStyle(color: Colors.purple),
-                    )
-                  ],
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  _getFromGallery();
-                },
-                child: const Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(4),
-                      child: Icon(
-                        Icons.image,
-                        color: Colors.purple,
-                      ),
-                    ),
-                    Text(
-                      'Gallery',
-                      style: TextStyle(color: Colors.purple),
-                    )
-                  ],
-                ),
-              )
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  void _getFromCamera() async {
-    XFile? pickedFile =
-    await ImagePicker().pickImage(source: ImageSource.camera);
-    _cropImage(pickedFile!.path);
-    Navigator.pop(context);
-  }
-
-  void _getFromGallery() async {
-    XFile? pickedFile =
-    await ImagePicker().pickImage(source: ImageSource.gallery);
-    _cropImage(pickedFile!.path);
-    Navigator.pop(context);
-  }
-
-  void _cropImage(filePath) async {
-    CroppedFile? croppedImage = await ImageCropper()
-        .cropImage(sourcePath: filePath, maxHeight: 1080, maxWidth: 1080);
-    if (croppedImage != null) {
-      setState(() {
-        imageFile = File(croppedImage.path);
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -163,8 +80,8 @@ class _RegisterAsClientCompanyState extends State<RegisterAsClientCompany>
                   size: 40,
                   color: Colors.white,
                 )),
-            title: const Text(
-              "Register as Company",
+            title: Text(
+                SettingsCubit.get(context).currentLanguage["companyRegister"],
               style: TextStyle(color: Colors.white),
             ),
             centerTitle: true,
@@ -200,39 +117,6 @@ class _RegisterAsClientCompanyState extends State<RegisterAsClientCompany>
                             key: formKey,
                             child: Column(
                               children: [
-
-
-                                // GestureDetector(
-                                //   onTap: () {
-                                //     _showImageDialog();
-                                //   },
-                                //   child: Padding(
-                                //     padding: const EdgeInsets.all(8),
-                                //     child: Container(
-                                //       width: size.width * .24,
-                                //       height: size.width * .24,
-                                //       decoration: BoxDecoration(
-                                //           border: Border.all(
-                                //             width: 1,
-                                //             color: Colors.cyanAccent,
-                                //           ),
-                                //           borderRadius:
-                                //               BorderRadius.circular(20)),
-                                //       child: ClipRRect(
-                                //         borderRadius:
-                                //             BorderRadius.circular(16),
-                                //         child: imageFile == null
-                                //             ? const Icon(
-                                //                 Icons.camera_enhance_sharp,
-                                //                 color: Colors.cyan,
-                                //                 size: 30,
-                                //               )
-                                //             : Image.file(imageFile!,
-                                //                 fit: BoxFit.fill),
-                                //       ),
-                                //     ),
-                                //   ),
-                                // ),
                                 const SizedBox(
                                   height: 40,
                                 ),
@@ -243,19 +127,19 @@ class _RegisterAsClientCompanyState extends State<RegisterAsClientCompany>
                                       .NameController,
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      return "This Field is missing";
+                                      return SettingsCubit.get(context).currentLanguage["fieldMissing"];
                                     } else {
                                       return null;
                                     }
                                   },
                                   style:
                                   const TextStyle(color: Colors.white),
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                       suffixIcon: Icon(
                                         Icons.drive_file_rename_outline,
                                         color: Colors.white,
                                       ),
-                                      hintText: "Company name",
+                                      hintText: SettingsCubit.get(context).currentLanguage["companyNameHint"],
                                       hintStyle:
                                       TextStyle(color: Colors.white),
                                       enabledBorder: UnderlineInputBorder(
@@ -277,19 +161,19 @@ class _RegisterAsClientCompanyState extends State<RegisterAsClientCompany>
                                   validator: (value) {
                                     if (value!.isEmpty ||
                                         !value.contains('@')) {
-                                      return "please enter a valid Email address";
+                                      return SettingsCubit.get(context).currentLanguage["emailValidationError"];
                                     } else {
                                       return null;
                                     }
                                   },
                                   style:
                                   const TextStyle(color: Colors.white),
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                       suffixIcon: Icon(
                                         Icons.email,
                                         color: Colors.white,
                                       ),
-                                      hintText: "Email",
+                                      hintText: SettingsCubit.get(context).currentLanguage["email"],
                                       hintStyle:
                                       TextStyle(color: Colors.white),
                                       enabledBorder: UnderlineInputBorder(
@@ -314,7 +198,7 @@ class _RegisterAsClientCompanyState extends State<RegisterAsClientCompany>
                                   validator: (value) {
                                     if (value!.isEmpty ||
                                         value.length < 6) {
-                                      return "please enter a valid password";
+                                      return SettingsCubit.get(context).currentLanguage["passwordLengthError"];
                                     } else {
                                       return null;
                                     }
@@ -338,7 +222,7 @@ class _RegisterAsClientCompanyState extends State<RegisterAsClientCompany>
                                           color: Colors.white,
                                         ),
                                       ),
-                                      hintText: "Password",
+                                      hintText: SettingsCubit.get(context).currentLanguage["password"],
                                       hintStyle: const TextStyle(
                                           color: Colors.white),
                                       enabledBorder:
@@ -361,19 +245,19 @@ class _RegisterAsClientCompanyState extends State<RegisterAsClientCompany>
                                       .PhoneController,
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      return "please enter a valid phone number";
+                                      return SettingsCubit.get(context).currentLanguage["phoneNumberEmptyError"];
                                     } else {
                                       return null;
                                     }
                                   },
                                   style:
                                   const TextStyle(color: Colors.white),
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                       suffixIcon: Icon(
                                         Icons.phone,
                                         color: Colors.white,
                                       ),
-                                      hintText: "Phone Number",
+                                      hintText: SettingsCubit.get(context).currentLanguage["phoneNumber"],
                                       hintStyle:
                                       TextStyle(color: Colors.white),
                                       enabledBorder: UnderlineInputBorder(
@@ -394,19 +278,19 @@ class _RegisterAsClientCompanyState extends State<RegisterAsClientCompany>
                                       .LocationController,
                                   validator: (value) {
                                     if (value!.isEmpty) {
-                                      return "please enter a valid address";
+                                      return SettingsCubit.get(context).currentLanguage["addressValidationError"];
                                     } else {
                                       return null;
                                     }
                                   },
                                   style:
                                   const TextStyle(color: Colors.white),
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                       suffixIcon: Icon(
                                         Icons.location_on,
                                         color: Colors.white,
                                       ),
-                                      hintText: "Address",
+                                      hintText: SettingsCubit.get(context).currentLanguage["address"],
                                       hintStyle:
                                       TextStyle(color: Colors.white),
                                       enabledBorder: UnderlineInputBorder(

@@ -1,6 +1,5 @@
 class Company{
   String name;
-  //String logo;
   String location;
   String email;
   String phoneNumber;
@@ -10,7 +9,6 @@ class Company{
     required this.name,
     required this.email,
     required this.phoneNumber,
-    //required this.logo,
     required this.location,
 });
 }

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:part_time/cubit/settings/cubit.dart';
 import 'package:part_time/ui/login/choose_login.dart';
 import 'package:part_time/ui/login/login_as_client.dart';
 import 'package:part_time/ui/register/register_as_client.dart';
@@ -75,7 +76,7 @@ class _ChooseRegisterState extends State<ChooseRegister> with TickerProviderStat
                   borderRadius:
                   BorderRadius.circular(13),
                 ),
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: 14.0),
                   child: Row(
@@ -83,8 +84,7 @@ class _ChooseRegisterState extends State<ChooseRegister> with TickerProviderStat
                     MainAxisAlignment.center,
                     children: [
                       Text(
-
-                        "Register as Client",
+                        SettingsCubit.get(context).currentLanguage["clientRegister"],
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -109,7 +109,7 @@ class _ChooseRegisterState extends State<ChooseRegister> with TickerProviderStat
                   borderRadius:
                   BorderRadius.circular(13),
                 ),
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.symmetric(
                       vertical: 14.0),
                   child: Row(
@@ -117,8 +117,7 @@ class _ChooseRegisterState extends State<ChooseRegister> with TickerProviderStat
                     MainAxisAlignment.center,
                     children: [
                       Text(
-
-                        "Register as Company",
+                        SettingsCubit.get(context).currentLanguage["companyRegister"],
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -152,7 +151,7 @@ class _ChooseRegisterState extends State<ChooseRegister> with TickerProviderStat
                       children: [
                         Text(
 
-                          "Login",
+                          SettingsCubit.get(context).currentLanguage["login"],
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

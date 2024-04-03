@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:part_time/cubit/settings/cubit.dart';
 import 'package:part_time/ui/login/login_as_compny.dart';
 import 'package:part_time/ui/register/register_as_client.dart';
 
@@ -76,7 +77,7 @@ class _ChooseLoginState extends State<ChooseLogin> with TickerProviderStateMixin
                             borderRadius:
                             BorderRadius.circular(13),
                           ),
-                          child: const Padding(
+                          child: Padding(
                             padding: EdgeInsets.symmetric(
                                 vertical: 14.0),
                             child: Row(
@@ -84,8 +85,7 @@ class _ChooseLoginState extends State<ChooseLogin> with TickerProviderStateMixin
                               MainAxisAlignment.center,
                               children: [
                                 Text(
-
-                                  "Login as Client",
+                                  SettingsCubit.get(context).currentLanguage["clientLogin"],
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -110,7 +110,7 @@ class _ChooseLoginState extends State<ChooseLogin> with TickerProviderStateMixin
                             borderRadius:
                             BorderRadius.circular(13),
                           ),
-                          child: const Padding(
+                          child:  Padding(
                             padding: EdgeInsets.symmetric(
                                 vertical: 14.0),
                             child: Row(
@@ -118,8 +118,7 @@ class _ChooseLoginState extends State<ChooseLogin> with TickerProviderStateMixin
                               MainAxisAlignment.center,
                               children: [
                                 Text(
-
-                                  "Login as Company",
+                                  SettingsCubit.get(context).currentLanguage["companyLogin"],
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -152,8 +151,7 @@ class _ChooseLoginState extends State<ChooseLogin> with TickerProviderStateMixin
                               MainAxisAlignment.center,
                               children: [
                                 Text(
-
-                                  "Register",
+                                  SettingsCubit.get(context).currentLanguage["register"],
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,

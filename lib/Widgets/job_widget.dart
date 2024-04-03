@@ -37,7 +37,7 @@ class _JobWidgetState extends State<JobWidget> {
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       child: ListTile(
         onTap: () {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
             uploadedBy:widget.uploadedBy;
             jobID:widget.jobId;
             return JobDetailsScreen();

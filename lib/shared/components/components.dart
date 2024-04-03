@@ -26,12 +26,8 @@ Widget ExploreJobsItemBuilder(Job job){
           ),),
           Row(
             children: [
-              const Text("2 days ago"),
-              const Spacer(),
-              IconButton(
-                  onPressed: (){},
-                  icon: Icon(job.isSaved ? Icons.star : Icons.star_border),
-              ),
+              Text("2 days ago"),
+              Spacer(),
             ],
           ),
         ],

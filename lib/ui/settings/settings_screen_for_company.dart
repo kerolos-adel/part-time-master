@@ -36,7 +36,7 @@ class _SettingsCompanyScreenState extends State<SettingsCompanyScreen> {
                   )
               ),
               child:Scaffold(
-                bottomNavigationBar: BottomNavigationBarForComapny(indexNum:3),
+                bottomNavigationBar: BottomNavigationBarForComapny(indexNum:2),
 
                 backgroundColor: Colors.transparent,
                 appBar: AppBar(
@@ -51,7 +51,7 @@ class _SettingsCompanyScreenState extends State<SettingsCompanyScreen> {
                             stops: [.2,.9]
                         )
                     ),),
-
+                  title: Text(SettingsCubit.get(context).currentLanguage["settings"], style: TextStyle(color: Colors.white),),
                   centerTitle: true,
                 ),
                 body:  Padding(

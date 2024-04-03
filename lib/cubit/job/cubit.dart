@@ -7,6 +7,9 @@ class JobCubit extends Cubit<JobStates>{
 
   static JobCubit get(context) => BlocProvider.of(context);
 
+
+
+
   void PostJob(){
 
 
