@@ -8,7 +8,12 @@ import 'package:part_time/cubit/login/cubit.dart';
 import 'package:part_time/cubit/register/cubit.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
 import 'package:part_time/shared/preferences/cache_helper.dart';
-import 'package:part_time/ui/explore/explore_screen.dart';
+import 'package:part_time/ui/explore/explore_client_screen.dart';
+import 'package:part_time/ui/job_details/job_details_screen.dart';
+import 'package:part_time/ui/login/choose_login.dart';
+import 'package:part_time/ui/register/choose-register.dart';
+import 'package:part_time/ui/register/register_as_client.dart';
+import 'package:part_time/ui/welcome/welcome_screen.dart';
 
 
 void main() async {
@@ -57,7 +62,7 @@ class MyApp extends StatelessWidget {
     }
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ExploreScreen(),
+      home: WelcomeScreen(),
     );
   }
 }

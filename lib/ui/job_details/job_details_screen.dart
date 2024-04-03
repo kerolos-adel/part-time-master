@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
 import 'package:part_time/cubit/settings/states.dart';
 import 'package:part_time/models/job/job_model.dart';
-import 'package:part_time/ui/explore/explore_screen.dart';
+import 'package:part_time/ui/explore/explore_client_screen.dart';
 
 class JobDetailsScreen extends StatefulWidget {
   const JobDetailsScreen({super.key});
@@ -60,7 +60,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ExploreScreen(),
+                        builder: (context) => ExploreClientScreen(),
                       ));
                 },
                 icon: const Icon(
@@ -147,10 +147,13 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                           ),
                           dividerWidget(),
                           const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+
+                              SizedBox(
+                                width: 6,
+                              ),
                               Text(
-                                "0",
+                                'Average Age :',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
@@ -158,19 +161,20 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                 ),
                               ),
                               SizedBox(
-                                width: 6,
-                              ),
-                              Text(
-                                'Applications',
-                                style: TextStyle(color: Colors.grey),
-                              ),
-                              SizedBox(
                                 width: 10,
                               ),
-                              Icon(
-                                Icons.how_to_reg_sharp,
-                                color: Colors.grey,
-                              )
+                              Text(
+                                "10",
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                              Text(
+                                " : ",
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                              Text(
+                                "20 years",
+                                style: TextStyle(color: Colors.grey),
+                              ),
                             ],
                           ),
                           Column(

@@ -4,7 +4,7 @@ import 'package:part_time/cubit/layout/cubit.dart';
 import 'package:part_time/cubit/layout/states.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
 import 'package:part_time/cubit/settings/states.dart';
-import 'package:part_time/ui/settings/settings_screen.dart';
+import 'package:part_time/ui/settings/settings_screen_for_client.dart';
 
 class PersonLayoutScreen extends StatelessWidget {
   const PersonLayoutScreen({super.key});
@@ -29,7 +29,7 @@ class PersonLayoutScreen extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const SettingsScreen()));
+                                  builder: (context) => const SettingsClientScreen()));
                         },
                         icon: const Icon(
                           Icons.settings,

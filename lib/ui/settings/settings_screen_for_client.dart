@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_time/Widgets/bootom_nav_bar_client.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
 import 'package:part_time/cubit/settings/states.dart';
 import 'package:part_time/shared/preferences/cache_helper.dart';
 import 'package:part_time/shared/styles/colors.dart';
 
-import '../../Widgets/bottom_nav_bar.dart';
+import '../../Widgets/bottom_nav_bar_for_company.dart';
 
-class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key});
+class SettingsClientScreen extends StatefulWidget {
+  const SettingsClientScreen({super.key});
 
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
+  State<SettingsClientScreen> createState() => _SettingsClientScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _SettingsClientScreenState extends State<SettingsClientScreen> {
 
   void submit(context, value){
     CacheHelper.saveData(key: "language", value: value).then((value){
@@ -40,7 +41,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   )
               ),
               child:Scaffold(
-                bottomNavigationBar: BottomNavigationBarForApp(indexNum:3),
+                bottomNavigationBar: BottomNavigationBarForClient(indexNum:2),
 
                 backgroundColor: Colors.transparent,
                 appBar: AppBar(

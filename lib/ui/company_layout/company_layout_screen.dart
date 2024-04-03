@@ -5,7 +5,7 @@ import 'package:part_time/cubit/layout/states.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
 import 'package:part_time/cubit/settings/states.dart';
 import 'package:part_time/shared/styles/colors.dart';
-import 'package:part_time/ui/settings/settings_screen.dart';
+import 'package:part_time/ui/settings/settings_screen_for_client.dart';
 
 class CompanyLayoutScreen extends StatelessWidget {
   const CompanyLayoutScreen({super.key});
@@ -30,7 +30,7 @@ class CompanyLayoutScreen extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const SettingsScreen()));
+                                builder: (context) => const SettingsClientScreen()));
                       },
                       icon: const Icon(
                         Icons.settings,

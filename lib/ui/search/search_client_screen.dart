@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../Widgets/bottom_nav_bar.dart';
+import '../../Widgets/bootom_nav_bar_client.dart';
+import '../../Widgets/bottom_nav_bar_for_company.dart';
 
-class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key});
+class SearchClientScreen extends StatefulWidget {
+  const SearchClientScreen({super.key});
 
   @override
-  State<SearchScreen> createState() => _SearchScreenState();
+  State<SearchClientScreen> createState() => _SearchClientScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class _SearchClientScreenState extends State<SearchClientScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,7 +25,7 @@ class _SearchScreenState extends State<SearchScreen> {
     )
     ),
     child:Scaffold(
-      bottomNavigationBar: BottomNavigationBarForApp(indexNum:1),
+      bottomNavigationBar: BottomNavigationBarForClient(indexNum:1),
 
       backgroundColor: Colors.transparent,
       appBar: AppBar(

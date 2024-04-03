@@ -1,13 +1,16 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:part_time/ui/search/search_comanpy_screen.dart';
+import 'package:part_time/ui/settings/settings_screen_for_company.dart';
 
 import '../ui/add_job/add_job_screen.dart';
-import '../ui/explore/explore_screen.dart';
-import '../ui/search/search_screen.dart';
-import '../ui/settings/settings_screen.dart';
+import '../ui/explore/explore_client_screen.dart';
+import '../ui/explore/explore_comany_screen.dart';
+import '../ui/search/search_client_screen.dart';
+import '../ui/settings/settings_screen_for_client.dart';
 
-class BottomNavigationBarForApp extends StatelessWidget {
-   BottomNavigationBarForApp({super.key, required this.indexNum});
+class BottomNavigationBarForComapny extends StatelessWidget {
+  BottomNavigationBarForComapny({super.key, required this.indexNum});
    void _logout(context){
      showDialog(context: context, builder: (context) {
        return AlertDialog(
@@ -62,16 +65,16 @@ int indexNum = 0;
       animationCurve: Curves.bounceInOut,
       onTap: (index) {
         if(index==0){
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ExploreScreen(),));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ExploreCompanyScreen(),));
         }
         else if(index==1){
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SearchScreen(),));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SearchComapnyScreen(),));
         }
         else if(index==2){
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const AddJobScreen(),));
         }
         else if(index==3){
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SettingsScreen(),));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SettingsCompanyScreen(),));
         }
         else if(index==4){
           _logout(context);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:part_time/Widgets/bottom_nav_bar.dart';
+import 'package:part_time/Widgets/bootom_nav_bar_client.dart';
+import 'package:part_time/Widgets/bottom_nav_bar_for_company.dart';
 import 'package:part_time/Widgets/job_widget.dart';
 import 'package:part_time/constants/values/values.dart';
 import 'package:part_time/cubit/explore/cubit.dart';
@@ -11,16 +12,17 @@ import 'package:part_time/shared/styles/colors.dart';
 import 'package:part_time/ui/job_details/job_details_screen.dart';
 
 import '../../Persistent/Presistent.dart';
-import '../search/search_screen.dart';
+import '../search/search_client_screen.dart';
+import '../search/search_comanpy_screen.dart';
 
-class ExploreScreen extends StatefulWidget {
-  const ExploreScreen({super.key});
+class ExploreCompanyScreen extends StatefulWidget {
+  const ExploreCompanyScreen({super.key});
 
   @override
-  State<ExploreScreen> createState() => _ExploreScreenState();
+  State<ExploreCompanyScreen> createState() => _ExploreCompanyScreenState();
 }
 
-class _ExploreScreenState extends State<ExploreScreen> {
+class _ExploreCompanyScreenState extends State<ExploreCompanyScreen> {
   String?jobCategoryFilter;
 
   _showTaskCategoriesDialog() {
@@ -101,7 +103,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 )
             ),
             child: Scaffold(
-                bottomNavigationBar: BottomNavigationBarForApp(indexNum: 0),
+                bottomNavigationBar: BottomNavigationBarForComapny(indexNum: 0),
                 appBar: AppBar(
                   flexibleSpace: Container(
                     decoration: const BoxDecoration(
@@ -115,7 +117,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                         )
                     ),),
                   title: const Text(
-                    "Jobs Screen", style: TextStyle(color: Colors.white),),
+                    "My Jobs", style: TextStyle(color: Colors.white),),
                   centerTitle: true,
                   leading: IconButton(onPressed: () {
                     _showTaskCategoriesDialog();
@@ -125,7 +127,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                   actions: [
                     IconButton(onPressed: () {
                       Navigator.pushReplacement(context, MaterialPageRoute(
-                        builder: (context) => SearchScreen(),));
+                        builder: (context) => SearchComapnyScreen(),));
                     }, icon: const Icon(Icons.search_outlined, color: Colors.black,))
                   ],
                 ),
