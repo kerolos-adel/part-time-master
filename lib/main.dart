@@ -7,6 +7,7 @@ import 'package:part_time/cubit/layout/cubit.dart';
 import 'package:part_time/cubit/login/cubit.dart';
 import 'package:part_time/cubit/register/cubit.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
+import 'package:part_time/cubit/user/cubit.dart';
 import 'package:part_time/shared/preferences/cache_helper.dart';
 import 'package:part_time/ui/splash/splash_screen.dart';
 
@@ -40,6 +41,9 @@ void main() async {
         ),
         BlocProvider<JobCubit>(
           create: (BuildContext context) => JobCubit(),
+        ),
+        BlocProvider<UserCubit>(
+          create: (BuildContext context) => UserCubit(),
         ),
       ],
       child: const MyApp(),

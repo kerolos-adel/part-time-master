@@ -9,5 +9,9 @@ class ExploreCubit extends Cubit<ExploreStates>{
 
   var SearchController = TextEditingController();
 
+  void SearchForJobs(){
+
+  }
+
 
 }

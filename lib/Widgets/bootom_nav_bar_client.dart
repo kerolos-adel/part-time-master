@@ -1,5 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:part_time/cubit/user/cubit.dart';
+import 'package:part_time/ui/login/choose_login.dart';
 
 import '../ui/add_job/add_job_screen.dart';
 import '../ui/explore/explore_client_screen.dart';
@@ -28,10 +30,14 @@ class BottomNavigationBarForClient extends StatelessWidget {
         ),),
         actions: [
           TextButton(onPressed: () {
-
+            Navigator.pop(context);
           }, child: const Text('No',style:TextStyle(color: Colors.green,fontSize: 18) ,)),
           TextButton(onPressed: () {
-
+            UserCubit.get(context).SignOut();
+            while(Navigator.canPop(context)){
+              Navigator.pop(context);
+            }
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ChooseLogin()));
           }, child: const Text('Yes',style:TextStyle(color: Colors.green,fontSize: 18) ,)),
         ],
       );
@@ -50,7 +56,6 @@ class BottomNavigationBarForClient extends StatelessWidget {
       items:
       const [
         Icon(Icons.list,size: 19,color: Colors.black,),
-        Icon(Icons.search,size: 19,color: Colors.black,),
         Icon(Icons.settings ,size: 19,color: Colors.black,),
         Icon(Icons.exit_to_app ,size: 19,color: Colors.black,),
 
@@ -64,12 +69,9 @@ class BottomNavigationBarForClient extends StatelessWidget {
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ExploreClientScreen(),));
         }
         else if(index==1){
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SearchClientScreen(),));
-        }
-        else if(index==2){
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const SettingsClientScreen(),));
         }
-        else if(index==3){
+        else if(index==2){
           _logout(context);
         }
       },

@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:part_time/cubit/register/cubit.dart';
 import 'package:part_time/cubit/register/states.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
+import 'package:part_time/shared/components/components.dart';
 import 'package:part_time/ui/login/login_as_client.dart';
 
 import '../../cubit/login/cubit.dart';
@@ -55,9 +56,9 @@ class _RegisterAsClientScreenState extends State<RegisterAsClientScreen>
 
   List gender = ["male", "female", "other"];
 
-  String? select;
 
-  Row addRadioButton(int btnValue, String title) {
+
+  Row addRadioButton(context, int btnValue, String title) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
@@ -66,11 +67,11 @@ class _RegisterAsClientScreenState extends State<RegisterAsClientScreen>
               .of(context)
               .primaryColor,
           value: gender[btnValue],
-          groupValue: select,
+          groupValue: RegisterCubit.get(context).GenderSelected,
           onChanged: (value) {
             setState(() {
               print(value);
-              select = value;
+              RegisterCubit.get(context).GenderSelected = value;
             });
           },
         ),
@@ -81,9 +82,6 @@ class _RegisterAsClientScreenState extends State<RegisterAsClientScreen>
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
     return BlocBuilder<RegisterCubit, RegisterStates>(
         builder: (context, state) =>
             Scaffold(
@@ -282,7 +280,11 @@ class _RegisterAsClientScreenState extends State<RegisterAsClientScreen>
                                       keyboardType: TextInputType.text,
                                       controller: RegisterCubit
                                           .get(context)
-                                          .AgeController,
+                                          .BirthDateController,
+                                      enabled: true,
+                                      onTap: () async {
+                                        await RegisterCubit.get(context).pickDateDialog(context);
+                                      },
                                       validator: (value) {
                                         if (value!.isEmpty) {
                                           return SettingsCubit.get(context).currentLanguage["ageEmptyError"];
@@ -322,13 +324,12 @@ class _RegisterAsClientScreenState extends State<RegisterAsClientScreen>
                                             fontSize: 15,
                                             color: Colors.white
                                         ),
-
                                         ),
                                         Row(
                                           children: <Widget>[
-                                            addRadioButton(0, SettingsCubit.get(context).currentLanguage["male"]),
-                                            addRadioButton(1, SettingsCubit.get(context).currentLanguage["female"]),
-                                            addRadioButton(2, SettingsCubit.get(context).currentLanguage["other"]),
+                                            addRadioButton(context, 0, SettingsCubit.get(context).currentLanguage["male"]),
+                                            addRadioButton(context, 1, SettingsCubit.get(context).currentLanguage["female"]),
+                                            addRadioButton(context, 2, SettingsCubit.get(context).currentLanguage["other"]),
                                           ],
                                         ),
                                         Divider(
@@ -340,9 +341,24 @@ class _RegisterAsClientScreenState extends State<RegisterAsClientScreen>
                                       height: 30,
                                     ),
                                     MaterialButton(
-                                        onPressed: () {
+                                        onPressed: state is RegisterWithEmailAndPasswordOnProgressState
+                                            ? null : () async {
                                           if (formKey.currentState!.validate()) {
                                             print("All Data is ok");
+                                            await RegisterCubit.get(context).ClientSignUp().then((value){
+                                              if(value is String){
+                                                myToast(
+                                                  msg: value,
+                                                  backgroundColor: Colors.redAccent
+                                                );
+                                              }
+                                              else{
+                                                myToast(
+                                                    msg: "Registered Successfully",
+                                                    backgroundColor: Colors.green
+                                                );
+                                              }
+                                            });
                                           } else {
                                             print("Error");
                                           }
@@ -416,453 +432,453 @@ class _RegisterAsClientScreenState extends State<RegisterAsClientScreen>
               ),
             ));
   }
-
-  Widget PersonRegisterBuilder(context) {
-    List<String> genderItems = [
-      SettingsCubit
-          .get(context)
-          .currentLanguage["male"],
-      SettingsCubit
-          .get(context)
-          .currentLanguage["female"],
-    ];
-    String genderSelectedItem =
-    SettingsCubit
-        .get(context)
-        .currentLanguage["male"];
-    List<String> educationItems = [
-      SettingsCubit
-          .get(context)
-          .currentLanguage["bachelors"],
-      SettingsCubit
-          .get(context)
-          .currentLanguage["masters"],
-      SettingsCubit
-          .get(context)
-          .currentLanguage["doctoral"],
-    ];
-    String educationSelectedItem =
-    SettingsCubit
-        .get(context)
-        .currentLanguage["bachelors"];
-    return Column(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: TextFormField(
-            controller: RegisterCubit
-                .get(context)
-                .NameController,
-            decoration: InputDecoration(
-              labelText: SettingsCubit
-                  .get(context)
-                  .currentLanguage["name"],
-              border: InputBorder.none,
-              contentPadding:
-              const EdgeInsetsDirectional.symmetric(horizontal: 10),
-            ),
-            cursorColor: Colors.black,
-            keyboardType: TextInputType.name,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return SettingsCubit
-                    .get(context)
-                    .currentLanguage["nameEmptyError"];
-              }
-              return null;
-            },
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: TextFormField(
-            controller: RegisterCubit
-                .get(context)
-                .AgeController,
-            decoration: InputDecoration(
-              labelText: SettingsCubit
-                  .get(context)
-                  .currentLanguage["age"],
-              border: InputBorder.none,
-              contentPadding:
-              const EdgeInsetsDirectional.symmetric(horizontal: 10),
-            ),
-            cursorColor: Colors.black,
-            keyboardType: TextInputType.number,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return SettingsCubit
-                    .get(context)
-                    .currentLanguage["ageEmptyError"];
-              }
-              if (int.tryParse(value) == null) {
-                return SettingsCubit
-                    .get(context)
-                    .currentLanguage["ageParseError"];
-              }
-              return null;
-            },
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              children: [
-                Text(
-                  SettingsCubit
-                      .get(context)
-                      .currentLanguage["gender"],
-                  style: const TextStyle(
-                    fontSize: 17,
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: DropdownButton(
-                      value: genderSelectedItem,
-                      items: genderItems
-                          .map((e) =>
-                          DropdownMenuItem(
-                            value: e,
-                            child: Text(e),
-                          ))
-                          .toList(),
-                      onChanged: (item) =>
-                          setState(() {
-                            genderSelectedItem = item!;
-                          })),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              children: [
-                Text(
-                  SettingsCubit
-                      .get(context)
-                      .currentLanguage["educationLevel"],
-                  style: const TextStyle(
-                    fontSize: 17,
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: DropdownButton(
-                      value: educationSelectedItem,
-                      items: educationItems
-                          .map((e) =>
-                          DropdownMenuItem(
-                            value: e,
-                            child: Text(e),
-                          ))
-                          .toList(),
-                      onChanged: (item) =>
-                          setState(() {
-                            educationSelectedItem = item!;
-                          })),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: TextFormField(
-            controller: RegisterCubit
-                .get(context)
-                .EmailController,
-            decoration: InputDecoration(
-              labelText: SettingsCubit
-                  .get(context)
-                  .currentLanguage["email"],
-              border: InputBorder.none,
-              contentPadding:
-              const EdgeInsetsDirectional.symmetric(horizontal: 10),
-            ),
-            cursorColor: Colors.black,
-            keyboardType: TextInputType.emailAddress,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return SettingsCubit
-                    .get(context)
-                    .currentLanguage["emailEmptyError"];
-              }
-              return null;
-            },
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: TextFormField(
-            controller: RegisterCubit
-                .get(context)
-                .PasswordController,
-            decoration: InputDecoration(
-              labelText: SettingsCubit
-                  .get(context)
-                  .currentLanguage["password"],
-              border: InputBorder.none,
-              contentPadding:
-              const EdgeInsetsDirectional.symmetric(horizontal: 10),
-              suffixIcon: IconButton(
-                icon: Icon(RegisterCubit
-                    .get(context)
-                    .visable
-                    ? Icons.visibility_off
-                    : Icons.visibility),
-                onPressed: () {
-                  RegisterCubit.get(context).ChangePasswordSecure();
-                },
-              ),
-            ),
-            cursorColor: Colors.black,
-            obscureText: RegisterCubit
-                .get(context)
-                .visable,
-            keyboardType: TextInputType.text,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return SettingsCubit
-                    .get(context)
-                    .currentLanguage["passwordEmptyError"];
-              }
-              if (value.length < 8 || value.length > 16) {
-                return SettingsCubit
-                    .get(context)
-                    .currentLanguage["passwordLengthError"];
-              }
-              return null;
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget CompanyRegisterBuilder(context) {
-    return Column(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: TextFormField(
-            controller: RegisterCubit
-                .get(context)
-                .NameController,
-            decoration: InputDecoration(
-              labelText: SettingsCubit
-                  .get(context)
-                  .currentLanguage["name"],
-              border: InputBorder.none,
-              contentPadding:
-              const EdgeInsetsDirectional.symmetric(horizontal: 10),
-            ),
-            cursorColor: Colors.black,
-            keyboardType: TextInputType.name,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return SettingsCubit
-                    .get(context)
-                    .currentLanguage["nameEmptyError"];
-              }
-              return null;
-            },
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: TextFormField(
-            controller: RegisterCubit
-                .get(context)
-                .LocationController,
-            decoration: InputDecoration(
-              labelText: SettingsCubit
-                  .get(context)
-                  .currentLanguage["location"],
-              border: InputBorder.none,
-              contentPadding:
-              const EdgeInsetsDirectional.symmetric(horizontal: 10),
-            ),
-            cursorColor: Colors.black,
-            keyboardType: TextInputType.name,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return SettingsCubit
-                    .get(context)
-                    .currentLanguage["locationEmptyError"];
-              }
-              return null;
-            },
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: TextFormField(
-            controller: RegisterCubit
-                .get(context)
-                .PhoneController,
-            decoration: InputDecoration(
-              labelText:
-              SettingsCubit
-                  .get(context)
-                  .currentLanguage["phoneNumber"],
-              border: InputBorder.none,
-              contentPadding:
-              const EdgeInsetsDirectional.symmetric(horizontal: 10),
-            ),
-            cursorColor: Colors.black,
-            keyboardType: TextInputType.phone,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return SettingsCubit
-                    .get(context)
-                    .currentLanguage["phoneNumberEmptyError"];
-              }
-              return null;
-            },
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: TextFormField(
-            controller: RegisterCubit
-                .get(context)
-                .EmailController,
-            decoration: InputDecoration(
-              labelText: SettingsCubit
-                  .get(context)
-                  .currentLanguage["email"],
-              border: InputBorder.none,
-              contentPadding:
-              const EdgeInsetsDirectional.symmetric(horizontal: 10),
-            ),
-            cursorColor: Colors.black,
-            keyboardType: TextInputType.emailAddress,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return SettingsCubit
-                    .get(context)
-                    .currentLanguage["emailEmptyError"];
-              }
-              return null;
-            },
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: TextFormField(
-            controller: RegisterCubit
-                .get(context)
-                .PasswordController,
-            decoration: InputDecoration(
-              labelText: SettingsCubit
-                  .get(context)
-                  .currentLanguage["password"],
-              border: InputBorder.none,
-              contentPadding:
-              const EdgeInsetsDirectional.symmetric(horizontal: 10),
-              suffixIcon: IconButton(
-                icon: Icon(RegisterCubit
-                    .get(context)
-                    .visable
-                    ? Icons.visibility_off
-                    : Icons.visibility),
-                onPressed: () {
-                  RegisterCubit.get(context).ChangePasswordSecure();
-                },
-              ),
-            ),
-            cursorColor: Colors.black,
-            obscureText: RegisterCubit
-                .get(context)
-                .visable,
-            keyboardType: TextInputType.text,
-            validator: (value) {
-              if (value!.isEmpty) {
-                return SettingsCubit
-                    .get(context)
-                    .currentLanguage["passwordEmptyError"];
-              }
-              if (value.length < 8 || value.length > 16) {
-                return SettingsCubit
-                    .get(context)
-                    .currentLanguage["passwordLengthError"];
-              }
-              return null;
-            },
-          ),
-        ),
-      ],
-    );
-  }
+  //
+  // Widget PersonRegisterBuilder(context) {
+  //   List<String> genderItems = [
+  //     SettingsCubit
+  //         .get(context)
+  //         .currentLanguage["male"],
+  //     SettingsCubit
+  //         .get(context)
+  //         .currentLanguage["female"],
+  //   ];
+  //   String genderSelectedItem =
+  //   SettingsCubit
+  //       .get(context)
+  //       .currentLanguage["male"];
+  //   List<String> educationItems = [
+  //     SettingsCubit
+  //         .get(context)
+  //         .currentLanguage["bachelors"],
+  //     SettingsCubit
+  //         .get(context)
+  //         .currentLanguage["masters"],
+  //     SettingsCubit
+  //         .get(context)
+  //         .currentLanguage["doctoral"],
+  //   ];
+  //   String educationSelectedItem =
+  //   SettingsCubit
+  //       .get(context)
+  //       .currentLanguage["bachelors"];
+  //   return Column(
+  //     children: [
+  //       Container(
+  //         decoration: BoxDecoration(
+  //           color: Colors.white,
+  //           borderRadius: BorderRadius.circular(10),
+  //         ),
+  //         child: TextFormField(
+  //           controller: RegisterCubit
+  //               .get(context)
+  //               .NameController,
+  //           decoration: InputDecoration(
+  //             labelText: SettingsCubit
+  //                 .get(context)
+  //                 .currentLanguage["name"],
+  //             border: InputBorder.none,
+  //             contentPadding:
+  //             const EdgeInsetsDirectional.symmetric(horizontal: 10),
+  //           ),
+  //           cursorColor: Colors.black,
+  //           keyboardType: TextInputType.name,
+  //           validator: (value) {
+  //             if (value!.isEmpty) {
+  //               return SettingsCubit
+  //                   .get(context)
+  //                   .currentLanguage["nameEmptyError"];
+  //             }
+  //             return null;
+  //           },
+  //         ),
+  //       ),
+  //       const SizedBox(
+  //         height: 10,
+  //       ),
+  //       Container(
+  //         decoration: BoxDecoration(
+  //           color: Colors.white,
+  //           borderRadius: BorderRadius.circular(10),
+  //         ),
+  //         child: TextFormField(
+  //           controller: RegisterCubit
+  //               .get(context)
+  //               .BirthDateController,
+  //           decoration: InputDecoration(
+  //             labelText: SettingsCubit
+  //                 .get(context)
+  //                 .currentLanguage["age"],
+  //             border: InputBorder.none,
+  //             contentPadding:
+  //             const EdgeInsetsDirectional.symmetric(horizontal: 10),
+  //           ),
+  //           cursorColor: Colors.black,
+  //           keyboardType: TextInputType.number,
+  //           validator: (value) {
+  //             if (value!.isEmpty) {
+  //               return SettingsCubit
+  //                   .get(context)
+  //                   .currentLanguage["ageEmptyError"];
+  //             }
+  //             if (int.tryParse(value) == null) {
+  //               return SettingsCubit
+  //                   .get(context)
+  //                   .currentLanguage["ageParseError"];
+  //             }
+  //             return null;
+  //           },
+  //         ),
+  //       ),
+  //       const SizedBox(
+  //         height: 10,
+  //       ),
+  //       Container(
+  //         decoration: BoxDecoration(
+  //           color: Colors.white,
+  //           borderRadius: BorderRadius.circular(10),
+  //         ),
+  //         child: Padding(
+  //           padding: const EdgeInsets.symmetric(horizontal: 10),
+  //           child: Row(
+  //             children: [
+  //               Text(
+  //                 SettingsCubit
+  //                     .get(context)
+  //                     .currentLanguage["gender"],
+  //                 style: const TextStyle(
+  //                   fontSize: 17,
+  //                 ),
+  //               ),
+  //               const SizedBox(
+  //                 width: 10,
+  //               ),
+  //               Expanded(
+  //                 child: DropdownButton(
+  //                     value: genderSelectedItem,
+  //                     items: genderItems
+  //                         .map((e) =>
+  //                         DropdownMenuItem(
+  //                           value: e,
+  //                           child: Text(e),
+  //                         ))
+  //                         .toList(),
+  //                     onChanged: (item) =>
+  //                         setState(() {
+  //                           genderSelectedItem = item!;
+  //                         })),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //       const SizedBox(
+  //         height: 10,
+  //       ),
+  //       Container(
+  //         decoration: BoxDecoration(
+  //           color: Colors.white,
+  //           borderRadius: BorderRadius.circular(10),
+  //         ),
+  //         child: Padding(
+  //           padding: const EdgeInsets.symmetric(horizontal: 10),
+  //           child: Row(
+  //             children: [
+  //               Text(
+  //                 SettingsCubit
+  //                     .get(context)
+  //                     .currentLanguage["educationLevel"],
+  //                 style: const TextStyle(
+  //                   fontSize: 17,
+  //                 ),
+  //               ),
+  //               const SizedBox(
+  //                 width: 10,
+  //               ),
+  //               Expanded(
+  //                 child: DropdownButton(
+  //                     value: educationSelectedItem,
+  //                     items: educationItems
+  //                         .map((e) =>
+  //                         DropdownMenuItem(
+  //                           value: e,
+  //                           child: Text(e),
+  //                         ))
+  //                         .toList(),
+  //                     onChanged: (item) =>
+  //                         setState(() {
+  //                           educationSelectedItem = item!;
+  //                         })),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //       const SizedBox(
+  //         height: 10,
+  //       ),
+  //       Container(
+  //         decoration: BoxDecoration(
+  //           color: Colors.white,
+  //           borderRadius: BorderRadius.circular(10),
+  //         ),
+  //         child: TextFormField(
+  //           controller: RegisterCubit
+  //               .get(context)
+  //               .EmailController,
+  //           decoration: InputDecoration(
+  //             labelText: SettingsCubit
+  //                 .get(context)
+  //                 .currentLanguage["email"],
+  //             border: InputBorder.none,
+  //             contentPadding:
+  //             const EdgeInsetsDirectional.symmetric(horizontal: 10),
+  //           ),
+  //           cursorColor: Colors.black,
+  //           keyboardType: TextInputType.emailAddress,
+  //           validator: (value) {
+  //             if (value!.isEmpty) {
+  //               return SettingsCubit
+  //                   .get(context)
+  //                   .currentLanguage["emailEmptyError"];
+  //             }
+  //             return null;
+  //           },
+  //         ),
+  //       ),
+  //       const SizedBox(
+  //         height: 10,
+  //       ),
+  //       Container(
+  //         decoration: BoxDecoration(
+  //           color: Colors.white,
+  //           borderRadius: BorderRadius.circular(10),
+  //         ),
+  //         child: TextFormField(
+  //           controller: RegisterCubit
+  //               .get(context)
+  //               .PasswordController,
+  //           decoration: InputDecoration(
+  //             labelText: SettingsCubit
+  //                 .get(context)
+  //                 .currentLanguage["password"],
+  //             border: InputBorder.none,
+  //             contentPadding:
+  //             const EdgeInsetsDirectional.symmetric(horizontal: 10),
+  //             suffixIcon: IconButton(
+  //               icon: Icon(RegisterCubit
+  //                   .get(context)
+  //                   .visable
+  //                   ? Icons.visibility_off
+  //                   : Icons.visibility),
+  //               onPressed: () {
+  //                 RegisterCubit.get(context).ChangePasswordSecure();
+  //               },
+  //             ),
+  //           ),
+  //           cursorColor: Colors.black,
+  //           obscureText: RegisterCubit
+  //               .get(context)
+  //               .visable,
+  //           keyboardType: TextInputType.text,
+  //           validator: (value) {
+  //             if (value!.isEmpty) {
+  //               return SettingsCubit
+  //                   .get(context)
+  //                   .currentLanguage["passwordEmptyError"];
+  //             }
+  //             if (value.length < 8 || value.length > 16) {
+  //               return SettingsCubit
+  //                   .get(context)
+  //                   .currentLanguage["passwordLengthError"];
+  //             }
+  //             return null;
+  //           },
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
+  //
+  // Widget CompanyRegisterBuilder(context) {
+  //   return Column(
+  //     children: [
+  //       Container(
+  //         decoration: BoxDecoration(
+  //           color: Colors.white,
+  //           borderRadius: BorderRadius.circular(10),
+  //         ),
+  //         child: TextFormField(
+  //           controller: RegisterCubit
+  //               .get(context)
+  //               .NameController,
+  //           decoration: InputDecoration(
+  //             labelText: SettingsCubit
+  //                 .get(context)
+  //                 .currentLanguage["name"],
+  //             border: InputBorder.none,
+  //             contentPadding:
+  //             const EdgeInsetsDirectional.symmetric(horizontal: 10),
+  //           ),
+  //           cursorColor: Colors.black,
+  //           keyboardType: TextInputType.name,
+  //           validator: (value) {
+  //             if (value!.isEmpty) {
+  //               return SettingsCubit
+  //                   .get(context)
+  //                   .currentLanguage["nameEmptyError"];
+  //             }
+  //             return null;
+  //           },
+  //         ),
+  //       ),
+  //       const SizedBox(
+  //         height: 10,
+  //       ),
+  //       Container(
+  //         decoration: BoxDecoration(
+  //           color: Colors.white,
+  //           borderRadius: BorderRadius.circular(10),
+  //         ),
+  //         child: TextFormField(
+  //           controller: RegisterCubit
+  //               .get(context)
+  //               .LocationController,
+  //           decoration: InputDecoration(
+  //             labelText: SettingsCubit
+  //                 .get(context)
+  //                 .currentLanguage["location"],
+  //             border: InputBorder.none,
+  //             contentPadding:
+  //             const EdgeInsetsDirectional.symmetric(horizontal: 10),
+  //           ),
+  //           cursorColor: Colors.black,
+  //           keyboardType: TextInputType.name,
+  //           validator: (value) {
+  //             if (value!.isEmpty) {
+  //               return SettingsCubit
+  //                   .get(context)
+  //                   .currentLanguage["locationEmptyError"];
+  //             }
+  //             return null;
+  //           },
+  //         ),
+  //       ),
+  //       const SizedBox(
+  //         height: 10,
+  //       ),
+  //       Container(
+  //         decoration: BoxDecoration(
+  //           color: Colors.white,
+  //           borderRadius: BorderRadius.circular(10),
+  //         ),
+  //         child: TextFormField(
+  //           controller: RegisterCubit
+  //               .get(context)
+  //               .PhoneController,
+  //           decoration: InputDecoration(
+  //             labelText:
+  //             SettingsCubit
+  //                 .get(context)
+  //                 .currentLanguage["phoneNumber"],
+  //             border: InputBorder.none,
+  //             contentPadding:
+  //             const EdgeInsetsDirectional.symmetric(horizontal: 10),
+  //           ),
+  //           cursorColor: Colors.black,
+  //           keyboardType: TextInputType.phone,
+  //           validator: (value) {
+  //             if (value!.isEmpty) {
+  //               return SettingsCubit
+  //                   .get(context)
+  //                   .currentLanguage["phoneNumberEmptyError"];
+  //             }
+  //             return null;
+  //           },
+  //         ),
+  //       ),
+  //       const SizedBox(
+  //         height: 10,
+  //       ),
+  //       Container(
+  //         decoration: BoxDecoration(
+  //           color: Colors.white,
+  //           borderRadius: BorderRadius.circular(10),
+  //         ),
+  //         child: TextFormField(
+  //           controller: RegisterCubit
+  //               .get(context)
+  //               .EmailController,
+  //           decoration: InputDecoration(
+  //             labelText: SettingsCubit
+  //                 .get(context)
+  //                 .currentLanguage["email"],
+  //             border: InputBorder.none,
+  //             contentPadding:
+  //             const EdgeInsetsDirectional.symmetric(horizontal: 10),
+  //           ),
+  //           cursorColor: Colors.black,
+  //           keyboardType: TextInputType.emailAddress,
+  //           validator: (value) {
+  //             if (value!.isEmpty) {
+  //               return SettingsCubit
+  //                   .get(context)
+  //                   .currentLanguage["emailEmptyError"];
+  //             }
+  //             return null;
+  //           },
+  //         ),
+  //       ),
+  //       const SizedBox(
+  //         height: 10,
+  //       ),
+  //       Container(
+  //         decoration: BoxDecoration(
+  //           color: Colors.white,
+  //           borderRadius: BorderRadius.circular(10),
+  //         ),
+  //         child: TextFormField(
+  //           controller: RegisterCubit
+  //               .get(context)
+  //               .PasswordController,
+  //           decoration: InputDecoration(
+  //             labelText: SettingsCubit
+  //                 .get(context)
+  //                 .currentLanguage["password"],
+  //             border: InputBorder.none,
+  //             contentPadding:
+  //             const EdgeInsetsDirectional.symmetric(horizontal: 10),
+  //             suffixIcon: IconButton(
+  //               icon: Icon(RegisterCubit
+  //                   .get(context)
+  //                   .visable
+  //                   ? Icons.visibility_off
+  //                   : Icons.visibility),
+  //               onPressed: () {
+  //                 RegisterCubit.get(context).ChangePasswordSecure();
+  //               },
+  //             ),
+  //           ),
+  //           cursorColor: Colors.black,
+  //           obscureText: RegisterCubit
+  //               .get(context)
+  //               .visable,
+  //           keyboardType: TextInputType.text,
+  //           validator: (value) {
+  //             if (value!.isEmpty) {
+  //               return SettingsCubit
+  //                   .get(context)
+  //                   .currentLanguage["passwordEmptyError"];
+  //             }
+  //             if (value.length < 8 || value.length > 16) {
+  //               return SettingsCubit
+  //                   .get(context)
+  //                   .currentLanguage["passwordLengthError"];
+  //             }
+  //             return null;
+  //           },
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 }

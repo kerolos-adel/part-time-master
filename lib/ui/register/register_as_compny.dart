@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:part_time/cubit/register/cubit.dart';
 import 'package:part_time/cubit/register/states.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
+import 'package:part_time/shared/components/components.dart';
 import 'package:part_time/ui/login/login_as_client.dart';
 
 import '../../cubit/login/cubit.dart';
@@ -305,13 +306,24 @@ class _RegisterAsClientCompanyState extends State<RegisterAsClientCompany>
                                   height: 30,
                                 ),
                                 MaterialButton(
-                                    onPressed: () {
-                                      if (formKey.currentState!
-                                          .validate() &&
-                                          RegisterCubit.get(context)
-                                              .AccountType
-                                              .isNotEmpty) {
+                                    onPressed: state is RegisterWithEmailAndPasswordOnProgressState
+                                        ? null : () async {
+                                      if (formKey.currentState!.validate()) {
                                         print("All Data is ok");
+                                        await RegisterCubit.get(context).CompanySignUp().then((value){
+                                          if(value is String){
+                                            myToast(
+                                                msg: value,
+                                                backgroundColor: Colors.redAccent
+                                            );
+                                          }
+                                          else{
+                                            myToast(
+                                                msg: "Registered Successfully",
+                                                backgroundColor: Colors.green
+                                            );
+                                          }
+                                        });
                                       } else {
                                         print("Error");
                                       }
@@ -434,7 +446,7 @@ class _RegisterAsClientCompanyState extends State<RegisterAsClientCompany>
             borderRadius: BorderRadius.circular(10),
           ),
           child: TextFormField(
-            controller: RegisterCubit.get(context).AgeController,
+            controller: RegisterCubit.get(context).BirthDateController,
             decoration: InputDecoration(
               labelText: SettingsCubit.get(context).currentLanguage["age"],
               border: InputBorder.none,

@@ -1,5 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:part_time/cubit/user/cubit.dart';
+import 'package:part_time/ui/login/choose_login.dart';
 import 'package:part_time/ui/settings/settings_screen_for_company.dart';
 
 import '../ui/add_job/add_job_screen.dart';
@@ -30,10 +32,14 @@ class BottomNavigationBarForComapny extends StatelessWidget {
         ),),
         actions: [
           TextButton(onPressed: () {
-
+            Navigator.pop(context);
           }, child: const Text('No',style:TextStyle(color: Colors.green,fontSize: 18) ,)),
           TextButton(onPressed: () {
-
+            UserCubit.get(context).SignOut();
+            while(Navigator.canPop(context)){
+              Navigator.pop(context);
+            }
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ChooseLogin()));
           }, child: const Text('Yes',style:TextStyle(color: Colors.green,fontSize: 18) ,)),
         ],
       );

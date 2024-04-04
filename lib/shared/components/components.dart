@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:part_time/models/job/job_model.dart';
 
 Widget ExploreJobsItemBuilder(Job job){
@@ -33,5 +34,20 @@ Widget ExploreJobsItemBuilder(Job job){
         ],
       ),
     ),
+  );
+}
+
+Future myToast({
+  String msg = "",
+  Color backgroundColor = Colors.red,
+  int timeInSec = 4,
+}){
+  return Fluttertoast.showToast(
+    msg: msg,
+    toastLength: Toast.LENGTH_LONG,
+    gravity: ToastGravity.BOTTOM,
+    backgroundColor: backgroundColor,
+    timeInSecForIosWeb: timeInSec,
+    fontSize: 16,
   );
 }

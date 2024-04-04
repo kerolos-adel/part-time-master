@@ -6,7 +6,10 @@ import 'package:part_time/Widgets/job_widget.dart';
 import 'package:part_time/constants/values/values.dart';
 import 'package:part_time/cubit/explore/cubit.dart';
 import 'package:part_time/cubit/explore/states.dart';
+import 'package:part_time/cubit/job/cubit.dart';
+import 'package:part_time/cubit/job/states.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
+import 'package:part_time/models/job/job_model.dart';
 import 'package:part_time/shared/components/components.dart';
 import 'package:part_time/shared/styles/colors.dart';
 import 'package:part_time/ui/job_details/job_details_screen.dart';
@@ -22,76 +25,11 @@ class ExploreClientScreen extends StatefulWidget {
 }
 
 class _ExploreClientScreenState extends State<ExploreClientScreen> {
-  String?jobCategoryFilter;
-
-  _showTaskCategoriesDialog(context) {
-    showDialog(
-      context: context,
-      builder: (ctx) {
-        return AlertDialog(
-          backgroundColor: Colors.black54,
-          title: Text(
-            SettingsCubit.get(context).currentLanguage["jobCategory"],
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 20, color: Colors.white),
-          ),
-          content: Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width * .8,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: Persistent.jobCategoryList.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    setState(() {
-                      jobCategoryFilter = Persistent
-                          .jobCategoryList[index];
-                    });
-                    Navigator.canPop(context) ? Navigator.pop(context) : null;
-                    print('jobCategoryList[index],${Persistent
-                        .jobCategoryList[index]}');
-                  },
-                  child: Row(
-                    children: [
-                      Icon(Icons.arrow_right_alt_outlined, color: Colors.grey,),
-                      Padding(padding: EdgeInsets.all(8),
-                        child: Text(Persistent.jobCategoryList[index],
-                          style: TextStyle(color: Colors.grey, fontSize: 16),),
-                      )
-                    ],
-                  ),
-                );
-              },),
-          ),
-          actions: [
-            TextButton(onPressed: () {
-              Navigator.canPop(context) ? Navigator.pop(context) : null;
-            },
-                child: Text(
-                  SettingsCubit.get(context).currentLanguage["close"],
-                  style: TextStyle(color: Colors.white, fontSize: 16),)),
-            TextButton(onPressed: () {
-              setState(() {
-                jobCategoryFilter = null;
-              });
-              Navigator.canPop(context) ? Navigator.pop(context) : null;
-            },
-                child: Text(
-                  SettingsCubit.get(context).currentLanguage["cancelFilter"],
-                  style: TextStyle(color: Colors.white, fontSize: 16),)),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ExploreCubit, ExploreStates>(
+    return BlocBuilder<JobCubit, JobStates>(
         builder: (context, state) {
+          print("My Jobs size : ${JobCubit.get(context).myJobs.length}");
           return Container(
             decoration: const BoxDecoration(
                 gradient: LinearGradient(colors: [
@@ -121,35 +59,83 @@ class _ExploreClientScreenState extends State<ExploreClientScreen> {
                     SettingsCubit.get(context).currentLanguage["jobs"],
                     style: TextStyle(color: Colors.white),),
                   centerTitle: true,
-                  leading: IconButton(onPressed: () {
-                    _showTaskCategoriesDialog(context);
-                  },
-                      icon: const Icon(
-                        Icons.filter_list_rounded, color: Colors.black,)),
                   actions: [
-                    IconButton(onPressed: () {
-                      Navigator.pushReplacement(context, MaterialPageRoute(
-                        builder: (context) => SearchClientScreen(),));
-                    }, icon: const Icon(Icons.search_outlined, color: Colors.black,))
+                    IconButton(
+                        onPressed: () async {
+                          await JobCubit.get(context).GetAllJobs(context);
+                        }, icon: Icon(Icons.refresh)
+                    )
                   ],
                 ),
                 backgroundColor: Colors.transparent,
                 body: ListView.builder(
-                  itemCount: 3,
+                  itemCount: JobCubit.get(context).myJobs.length,
                   itemBuilder: (context, index) {
-                    return const JobWidget(jobTitle: "jobTitle",
-                      jobDescription: "jobDescription",
-                      jobId: "1",
-                      uploadedBy: "kerolosa adel",
-                      userImage: "https://wallpaperaccess.com/full/643379.jpg",
-                      name: "kerolos",
-                      recruitment: "recruitment",
-                      email: "kerolos@gmail.com",
-                      location: "Kuwait",);
+                    return JobsListBuilder(index, JobCubit.get(context).myJobs[index]);
                   },)
             ),
           );
         }
+    );
+  }
+  Widget JobsListBuilder(int index, Job job){
+    return Card(
+      color: Colors.white24,
+      elevation: 8,
+      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+      child: ListTile(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            uploadedBy:job.companyName;
+            return JobDetailsScreen(index: index);
+          },));
+        },
+
+        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        leading: Container(
+          padding: EdgeInsets.only(right: 12),
+          decoration:
+          BoxDecoration(border: Border(right: BorderSide(width: 1))),
+          child: Image.network("https://wallpaperaccess.com/full/643379.jpg"),
+        ),
+        title: Text(
+          job.title,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            color: Colors.amber,
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              job.companyName,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 13,
+              ),
+            ),
+            SizedBox(height: 8,),
+            Text(
+              job.location,
+              maxLines: 4,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 15,
+              ),
+            ),
+          ],
+        ),
+        trailing: Icon(Icons.keyboard_arrow_right,size: 30,color: Colors.black,),
+      ),
     );
   }
 }

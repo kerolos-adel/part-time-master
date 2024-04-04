@@ -37,7 +37,7 @@ class _SettingsClientScreenState extends State<SettingsClientScreen> {
                   )
               ),
               child:Scaffold(
-                bottomNavigationBar: BottomNavigationBarForClient(indexNum:2),
+                bottomNavigationBar: BottomNavigationBarForClient(indexNum:1),
 
                 backgroundColor: Colors.transparent,
                 appBar: AppBar(

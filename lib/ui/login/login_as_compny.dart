@@ -1,7 +1,13 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_time/cubit/job/cubit.dart';
+import 'package:part_time/cubit/user/cubit.dart';
+import 'package:part_time/shared/components/components.dart';
+import 'package:part_time/ui/explore/explore_client_screen.dart';
 import 'package:part_time/ui/explore/explore_comany_screen.dart';
 import 'package:part_time/ui/register/choose-register.dart';
 
@@ -163,8 +169,8 @@ class _LoginAsCompanyState extends State<LoginAsCompany>
                                         horizontal: 10),
                                     suffixIcon: IconButton(
                                       icon: Icon(LoginCubit.get(context).visable
-                                          ? Icons.visibility
-                                          : Icons.visibility_off),
+                                          ? Icons.visibility_off
+                                          : Icons.visibility),
                                       onPressed: () {
                                         LoginCubit.get(context)
                                             .ChangePasswordSecure();
@@ -194,14 +200,44 @@ class _LoginAsCompanyState extends State<LoginAsCompany>
                                 height: 30,
                               ),
                               MaterialButton(
-                                onPressed: () {
+                                onPressed: () async {
                                   if (formKey.currentState!.validate()) {
-                                    print("All Data is ok");
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                            const ExploreCompanyScreen()));
+                                    await LoginCubit.get(context)
+                                        .LoginUsingEmailAndPassword()
+                                        .then((value) async {
+                                      if (value is String) {
+                                        myToast(
+                                          msg: value,
+                                          backgroundColor: Colors.redAccent,
+                                        );
+                                      }
+                                      else {
+                                        UserCubit.get(context).SetNewToken(value["token"]);
+                                        print(value["token"]);
+                                        Map<String, dynamic> decodedToken = decodeJwt(value["token"]);
+                                        UserCubit.get(context).GetUserData(context, decodedToken);
+                                        await UserCubit.get(context).GetUserAllData(context, UserCubit.get(context).myUser.role);
+                                        await JobCubit.get(context).GetMyJobs(context);
+                                        myToast(
+                                          msg: "Logged in successfully",
+                                          backgroundColor: Colors.green,
+                                        );
+                                        if(UserCubit.get(context).myUser.role == "ROLE_USER"){
+                                          Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ExploreClientScreen()));
+                                        }
+                                        else{
+                                          Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ExploreCompanyScreen()));
+                                        }
+                                      }
+                                    });
                                   } else {
                                     print("Error");
                                   }
@@ -268,5 +304,31 @@ class _LoginAsCompanyState extends State<LoginAsCompany>
             ),
           ),
         ));
+  }
+  Map<String, dynamic> decodeJwt(String token) {
+    final parts = token.split('.');
+    if (parts.length != 3) {
+      throw Exception('Invalid token');
+    }
+
+    final payload = _decodeBase64(parts[1]);
+    final Map<String, dynamic> payloadMap = json.decode(payload);
+    return payloadMap;
+  }
+  String _decodeBase64(String str) {
+    String output = str.replaceAll('-', '+').replaceAll('_', '/');
+    switch (output.length % 4) {
+      case 0:
+        break;
+      case 2:
+        output += '==';
+        break;
+      case 3:
+        output += '=';
+        break;
+      default:
+        throw Exception('Illegal base64url string!');
+    }
+    return utf8.decode(base64Url.decode(output));
   }
 }
