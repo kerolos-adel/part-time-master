@@ -156,6 +156,20 @@ class JobCubit extends Cubit<JobStates> {
       JobApplyLinkController =
           TextEditingController(text: myJobs[index].applyLink);
     }
+    if (int.tryParse(JobAgeFromController.text) == null) {
+      myToast(
+        msg: SettingsCubit.get(context).currentLanguage["ageInvalid"],
+        backgroundColor: Colors.redAccent,
+      );
+      return;
+    }
+    if (int.tryParse(JobAgeToController.text) == null) {
+      myToast(
+        msg: SettingsCubit.get(context).currentLanguage["ageInvalid"],
+        backgroundColor: Colors.redAccent,
+      );
+      return;
+    }
 
     dynamic statusCode = await NetworkDatabase.UpdateJob(
         jobId: myJobs[index].id,
@@ -169,17 +183,24 @@ class JobCubit extends Cubit<JobStates> {
         ageTo: JobAgeToController.text);
 
     if (statusCode == 200 || statusCode == 204) {
+      myJobs[index].title = JobTitleController.text;
+      myJobs[index].description = JobDescriptionController.text;
+      myJobs[index].requirements = JobRequirementsController.text;
+      myJobs[index].applyLink = JobApplyLinkController.text;
+      myJobs[index].ageFrom = int.parse(JobAgeFromController.text);
+      myJobs[index].ageTo = int.parse(JobAgeToController.text);
+
       myToast(
         msg: SettingsCubit.get(context).currentLanguage["jobUpdated"],
         backgroundColor: Colors.green,
       );
+      emit(UpdateJobFinishedState());
       Navigator.pop(context);
     } else {
       myToast(
         msg: SettingsCubit.get(context).currentLanguage["unknownError"],
         backgroundColor: Colors.redAccent,
       );
-
       emit(UpdateJobFinishedState());
     }
   }

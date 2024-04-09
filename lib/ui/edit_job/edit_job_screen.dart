@@ -189,7 +189,7 @@ class _EditJobScreenState extends State<EditJobScreen> {
                             Center(
                               child: Padding(
                                 padding: const EdgeInsets.only(bottom: 30),
-                                child: state is PostJobOnProgressState
+                                child: state is UpdateJobOnProgressState
                                     ? CircularProgressIndicator()
                                     : MaterialButton(
                                   onPressed: () async {
@@ -218,7 +218,7 @@ class _EditJobScreenState extends State<EditJobScreen> {
                                           width: 9,
                                         ),
                                         Icon(
-                                          Icons.upload_file,
+                                          Icons.save,
                                           color: Colors.white,
                                         )
                                       ],
