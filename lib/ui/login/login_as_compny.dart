@@ -200,10 +200,13 @@ class _LoginAsCompanyState extends State<LoginAsCompany>
                                 height: 30,
                               ),
                               MaterialButton(
-                                onPressed: () async {
+                                onPressed: state
+                                is LoginWithEmailAndPasswordOnProgressState
+                                    ? null
+                                    : () async {
                                   if (formKey.currentState!.validate()) {
                                     await LoginCubit.get(context)
-                                        .LoginUsingEmailAndPassword()
+                                        .LoginUsingEmailAndPassword(context)
                                         .then((value) async {
                                       if (value is String) {
                                         myToast(
@@ -212,16 +215,11 @@ class _LoginAsCompanyState extends State<LoginAsCompany>
                                         );
                                       }
                                       else {
-                                        UserCubit.get(context).SetNewToken(value["token"]);
-                                        print(value["token"]);
-                                        Map<String, dynamic> decodedToken = decodeJwt(value["token"]);
-                                        UserCubit.get(context).GetUserData(context, decodedToken);
-                                        await UserCubit.get(context).GetUserAllData(context, UserCubit.get(context).myUser.role);
-                                        await JobCubit.get(context).GetMyJobs(context);
                                         myToast(
-                                          msg: "Logged in successfully",
+                                          msg: SettingsCubit.get(context).currentLanguage["loggedSuccessful"],
                                           backgroundColor: Colors.green,
                                         );
+                                        while(Navigator.canPop(context))Navigator.pop(context);
                                         if(UserCubit.get(context).myUser.role == "ROLE_USER"){
                                           Navigator.pushReplacement(
                                               context,
@@ -250,7 +248,10 @@ class _LoginAsCompanyState extends State<LoginAsCompany>
                                 child: Padding(
                                   padding:
                                   const EdgeInsets.symmetric(vertical: 14.0),
-                                  child: Row(
+                                  child: state
+                                  is LoginWithEmailAndPasswordOnProgressState
+                                      ? CircularProgressIndicator()
+                                      : Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(

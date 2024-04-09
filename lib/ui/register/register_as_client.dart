@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:part_time/cubit/register/cubit.dart';
 import 'package:part_time/cubit/register/states.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
@@ -345,7 +343,7 @@ class _RegisterAsClientScreenState extends State<RegisterAsClientScreen>
                                             ? null : () async {
                                           if (formKey.currentState!.validate()) {
                                             print("All Data is ok");
-                                            await RegisterCubit.get(context).ClientSignUp().then((value){
+                                            await RegisterCubit.get(context).ClientSignUp(context).then((value){
                                               if(value is String){
                                                 myToast(
                                                   msg: value,
@@ -354,9 +352,10 @@ class _RegisterAsClientScreenState extends State<RegisterAsClientScreen>
                                               }
                                               else{
                                                 myToast(
-                                                    msg: "Registered Successfully",
+                                                    msg: SettingsCubit.get(context).currentLanguage["registeredSuccessful"],
                                                     backgroundColor: Colors.green
                                                 );
+                                                Navigator.pop(context);
                                               }
                                             });
                                           } else {
@@ -372,7 +371,9 @@ class _RegisterAsClientScreenState extends State<RegisterAsClientScreen>
                                         child: Padding(
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 14.0),
-                                          child: Row(
+                                          child: state == RegisterWithEmailAndPasswordOnProgressState
+                                          ? CircularProgressIndicator()
+                                              : Row(
                                             mainAxisAlignment:
                                             MainAxisAlignment.center,
                                             children: [

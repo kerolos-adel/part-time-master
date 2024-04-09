@@ -1,4 +1,5 @@
 class Job {
+  int id;
   int companyId;
   String title;
   String companyName;
@@ -12,6 +13,7 @@ class Job {
   int ageTo;
 
   Job({
+    required this.id,
     required this.companyId,
     required this.location,
     required this.companyName,
@@ -26,6 +28,7 @@ class Job {
   });
 
   static Job FromJson(dynamic json, dynamic company) => Job(
+      id: json["id"],
       companyId: company.id,
       location: company.location,
       companyName: company.name,

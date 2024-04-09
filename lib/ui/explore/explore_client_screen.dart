@@ -25,6 +25,8 @@ class ExploreClientScreen extends StatefulWidget {
 }
 
 class _ExploreClientScreenState extends State<ExploreClientScreen> {
+
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<JobCubit, JobStates>(
@@ -68,7 +70,9 @@ class _ExploreClientScreenState extends State<ExploreClientScreen> {
                   ],
                 ),
                 backgroundColor: Colors.transparent,
-                body: ListView.builder(
+                body: state is GetAllJobsOnProgressState
+                ? Center(child: CircularProgressIndicator(),)
+                : ListView.builder(
                   itemCount: JobCubit.get(context).myJobs.length,
                   itemBuilder: (context, index) {
                     return JobsListBuilder(index, JobCubit.get(context).myJobs[index]);

@@ -5,7 +5,6 @@ import 'package:part_time/models/boarding/boarding_model.dart';
 import 'package:part_time/shared/preferences/cache_helper.dart';
 import 'package:part_time/shared/styles/colors.dart';
 import 'package:part_time/ui/login/choose_login.dart';
-import 'package:part_time/ui/register/register_as_client.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 

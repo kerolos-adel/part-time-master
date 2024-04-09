@@ -68,7 +68,9 @@ class _ExploreCompanyScreenState extends State<ExploreCompanyScreen> {
                   ],
                 ),
                 backgroundColor: Colors.transparent,
-                body: ListView.builder(
+                body: state is GetMyJobsOnProgressState
+                    ? Center(child: CircularProgressIndicator(),)
+                    : ListView.builder(
                   itemCount: JobCubit.get(context).myJobs.length,
                   itemBuilder: (context, index) {
                     return JobsListBuilder(index, JobCubit.get(context).myJobs[index]);

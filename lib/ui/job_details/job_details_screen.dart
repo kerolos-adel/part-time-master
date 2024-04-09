@@ -5,6 +5,10 @@ import 'package:part_time/cubit/job/cubit.dart';
 import 'package:part_time/cubit/job/states.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
 import 'package:part_time/cubit/settings/states.dart';
+import 'package:part_time/cubit/user/cubit.dart';
+import 'package:part_time/ui/edit_job/edit_job_screen.dart';
+import 'package:part_time/ui/explore/explore_comany_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class JobDetailsScreen extends StatefulWidget {
   int? index;
@@ -31,6 +35,42 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
     );
   }
 
+  void DeleteJob(context) {
+    showDialog(context: context, builder: (context) {
+      return AlertDialog(
+        backgroundColor: Colors.black54,
+        title: Row(
+          children: [
+            Padding(padding: EdgeInsets.all(8),
+              child: Icon(Icons.logout,color: Colors.white,size: 36,),
+            ),
+            Padding(padding: EdgeInsets.all(8),
+              child: Text(SettingsCubit.get(context).currentLanguage["deleteJob"],style:TextStyle(color:Colors.white,fontSize: 28,)),
+            ),
+          ],
+        ),
+        content: Text(SettingsCubit.get(context).currentLanguage["deleteJobConfirmMessage"],style: TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+        ),),
+        actions: [
+          TextButton(onPressed: () {
+            Navigator.pop(context);
+          }, child: Text(SettingsCubit.get(context).currentLanguage["no"],style:TextStyle(color: Colors.green,fontSize: 18) ,)),
+          TextButton(onPressed: () async {
+            await JobCubit.get(context).DeleteJob(
+                context,
+                JobCubit.get(context).myJobs[widget.index!].id,
+                widget.index
+            );
+            while(Navigator.canPop(context)){
+              Navigator.pop(context);
+            }
+          }, child: Text(SettingsCubit.get(context).currentLanguage["yes"],style:TextStyle(color: Colors.green,fontSize: 18) ,)),
+        ],
+      );
+    },);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +87,59 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
           BlocBuilder<SettingsCubit, SettingsStates>(builder: (context, state) {
             return Scaffold(
               backgroundColor: Colors.transparent,
-              appBar: AppBar(
+              appBar: UserCubit.get(context).myUser.role == "ROLE_COMPANY" ?
+              AppBar(
+                flexibleSpace: Container(
+                  decoration:  BoxDecoration(
+                      gradient: LinearGradient(
+                          colors: [Colors.deepPurple, Colors.blueAccent],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          stops: [.2, .9])),
+                ),
+                leading: IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon:  Icon(
+                      Icons.close,
+                      size: 40,
+                      color: Colors.white,
+                    )),
+                actions: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: IconButton(
+                          onPressed: () {
+                            DeleteJob(context);
+                          },
+                          icon: Icon(Icons.delete, color: Colors.white, size: 30,),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.cyan,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: IconButton(
+                        onPressed: () {
+                          JobCubit.get(context).ClearControllers();
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => EditJobScreen(index: widget.index,)));
+                        },
+                        icon: Icon(Icons.edit, color: Colors.white, size: 30,),
+                      ),
+                    ),
+                  ),
+                ],
+              ) : AppBar(
                 flexibleSpace: Container(
                   decoration:  BoxDecoration(
                       gradient: LinearGradient(
@@ -98,20 +190,6 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    height: 60,
-                                    width: 60,
-                                    decoration: BoxDecoration(
-                                      border:
-                                      Border.all(width: 3, color: Colors.grey),
-                                      shape: BoxShape.rectangle,
-                                      image: DecorationImage(
-                                        image: NetworkImage(
-                                            "https://cdn1.iconfinder.com/data/icons/mix-color-3/502/Untitled-7-1024.png"),
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
-                                  ),
                                   Padding(
                                     padding: EdgeInsets.only(left: 10),
                                     child: Column(
@@ -236,7 +314,9 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                               ),
                               Center(
                                 child: MaterialButton(
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    await launchURL(JobCubit.get(context).myJobs[widget.index!].applyLink);
+                                  },
                                   color: Colors.blueAccent,
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
@@ -262,8 +342,6 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                      SizedBox(
                       height: 30,
                     ),
-
-
                   ],
                 ),
               ),
@@ -272,6 +350,11 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
         );
       }
     );
-
+  }
+  launchURL(link) async {
+    final Uri url = Uri.parse(link);
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch ${url}');
+    }
   }
 }

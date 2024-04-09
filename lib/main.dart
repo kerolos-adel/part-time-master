@@ -11,9 +11,6 @@ import 'package:part_time/cubit/user/cubit.dart';
 import 'package:part_time/shared/preferences/cache_helper.dart';
 import 'package:part_time/ui/splash/splash_screen.dart';
 
-import 'ui/explore/explore_client_screen.dart';
-
-
 void main() async {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
@@ -46,7 +43,7 @@ void main() async {
           create: (BuildContext context) => UserCubit(),
         ),
       ],
-      child: const MyApp(),
+      child: MyApp(),
     ),
   );
 }

@@ -1,4 +1,4 @@
-package com.example.part_time
+package com.part.time
 
 import io.flutter.embedding.android.FlutterActivity
 

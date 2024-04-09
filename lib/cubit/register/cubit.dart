@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_time/cubit/register/states.dart';
+import 'package:part_time/cubit/settings/cubit.dart';
 import 'package:part_time/network/authentication.dart';
+import 'package:part_time/shared/components/components.dart';
 
 class RegisterCubit extends Cubit<RegisterStates>{
   RegisterCubit(): super(RegisterInitialState());
@@ -16,7 +18,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
 
   // Person's data
   var BirthDateController = TextEditingController();
-  String? GenderSelected;
+  String GenderSelected = "";
 
 
   // Company's data
@@ -32,9 +34,7 @@ class RegisterCubit extends Cubit<RegisterStates>{
   Future pickDateDialog(context) async {
     picked = await showDatePicker(context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime.now().subtract(
-          Duration(days: 0),
-        ),
+        firstDate: DateTime(1900),
         lastDate: DateTime(2100)
     );
     if(picked!=null){
@@ -43,10 +43,11 @@ class RegisterCubit extends Cubit<RegisterStates>{
   }
 
 
-  Future CompanySignUp() async {
+  Future CompanySignUp(context) async {
     emit(RegisterWithEmailAndPasswordOnProgressState());
 
     var result = await NetworkAuthenticate.CompanySignup(
+        context,
         NameController.text,
         EmailController.text,
         PasswordController.text,
@@ -64,15 +65,21 @@ class RegisterCubit extends Cubit<RegisterStates>{
     return result;
   }
 
-  Future ClientSignUp() async {
+  Future ClientSignUp(context) async {
     emit(RegisterWithEmailAndPasswordOnProgressState());
 
+    if(GenderSelected.isEmpty){
+      emit(RegisterWithEmailAndPasswordFaildState());
+      return SettingsCubit.get(context).currentLanguage["selectGender"];
+    }
+
     var result = await NetworkAuthenticate.ClientSignup(
+        context,
         NameController.text,
         EmailController.text,
         PasswordController.text,
         picked,
-        GenderSelected!
+        GenderSelected
     );
 
     if(result is String){

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:part_time/cubit/job/cubit.dart';
 import 'package:part_time/cubit/login/states.dart';
+import 'package:part_time/cubit/user/cubit.dart';
 import 'package:part_time/network/authentication.dart';
+import 'package:part_time/shared/methods/methods.dart';
 
 class LoginCubit extends Cubit<LoginStates>{
 
@@ -18,14 +21,25 @@ class LoginCubit extends Cubit<LoginStates>{
     emit(LoginChangePasswordSecureState());
   }
 
-  Future LoginUsingEmailAndPassword() async {
+  Future LoginUsingEmailAndPassword(context) async {
     emit(LoginWithEmailAndPasswordOnProgressState());
 
-    var result = await NetworkAuthenticate.Login(EmailController.text, PasswordController.text);
+    var result = await NetworkAuthenticate.Login(context, EmailController.text, PasswordController.text);
     if(result is String){
       emit(LoginWithEmailAndPasswordFaildState());
     }
     else{
+
+      UserCubit.get(context).SetNewToken(result["token"]);
+      Map<String, dynamic> decodedToken =
+      decodeJwt(result["token"]);
+      UserCubit.get(context).GetUserData(context, decodedToken);
+      await UserCubit.get(context).GetUserAllData(context, UserCubit.get(context).myUser.role);
+      if(UserCubit.get(context).myUser.role == "ROLE_USER")
+        await JobCubit.get(context).GetAllJobs(context);
+      else
+        await JobCubit.get(context).GetMyJobs(context);
+
       emit(LoginWithEmailAndPasswordSuccessfulState());
     }
     return result;

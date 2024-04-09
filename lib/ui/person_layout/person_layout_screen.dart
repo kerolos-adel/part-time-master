@@ -22,7 +22,7 @@ class PersonLayoutScreen extends StatelessWidget {
                       child: Icon(Icons.person),
                     ),
                   ),
-                  title: const Text("Username"),
+                  title: Text("Username"),
                   actions: [
                     IconButton(
                         onPressed: () {

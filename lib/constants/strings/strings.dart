@@ -89,10 +89,32 @@ dynamic EnglishStrings = {
   "other" : "Other",
   "companyNameHint" : "Company Name",
   "addressValidationError" : "please enter a valid address",
-
   "jobSearch" : "Search for Job",
   "search" : "Search",
   "applyLink" : "Apply Link",
+  "registeredSuccessful" : "Registered Successfully",
+  "phoneValidError" : "Phone number is not valid",
+  "loggedSuccessful" : "Logged in successfully",
+  "selectGender" : "Select your Gender",
+  "signOut" : "Sign Out",
+  "signOutConfirmMessage" : "Do you want to Log out?",
+  "no" : "No",
+  "yes" : "Yes",
+  "invalidLoginData" : "Invalid username or password",
+  "unknownError" : "Something wrong happened",
+  "from" : "From",
+  "to" : "To",
+  "ageInvalid" : "Invalid Age",
+  "jobPublished" : "Job has been published",
+  "applyLinkWarning" : "Make sure to put \"https://\" in the start of the link",
+  "jobDeleted" : "Job has been deleted successfully",
+  "jobUpdated" : "Job has been updated successfully",
+  "editJobData" : "Edit Job Data",
+
+
+  "deleteJob" : "Delete Job",
+  "deleteJobConfirmMessage" : "Do you want to delete this job ?",
+
 };
 
 dynamic ArabicStrings = {
@@ -185,8 +207,29 @@ dynamic ArabicStrings = {
   "other" : "اخرى",
   "companyNameHint" : "اسم الشركة",
   "addressValidationError" : "ادخل عنوان صحيح",
-
   "jobSearch" : "البحث عن وظيفة",
   "search" : "ابحث",
   "applyLink" : "رابط التسجيل",
+  "registeredSuccessful" : "تم تسجيل الحساب بنجاح",
+  "phoneValidError" : "رقم الهاتف غير صحيح",
+  "loggedSuccessful" : "تم تسجيل دخول بنجاح",
+  "selectGender" : "اختار الجنس",
+  "signOut" : "تسجيل الخروج",
+  "signOutConfirmMessage" : "هل تريد تسجيل الخروج ؟",
+  "no" : "لا",
+  "yes" : "نعم",
+  "invalidLoginData" : "البريد الالكتروني او كلمة السر غير صحيحة",
+  "unknownError" : "حدث شيء خطأ",
+  "from" : "من",
+  "to" : "الى",
+  "ageInvalid" : "عُمر غير صحيح",
+  "jobPublished" : "تم نشر الوظيفة",
+  "applyLinkWarning" : "تأكد من وجود \"https://\" في بداية رابط التسجيل",
+  "jobDeleted" : "تم حذف الوظيفة بنجاح",
+  "jobUpdated" : "تم تعديل الوظيفة بنجاح",
+  "editJobData" : "تعديل بيانات الوظيفة",
+
+  "deleteJob" : "حذف الوظيفة",
+  "deleteJobConfirmMessage" : "هل تريد حذف هذه الوظيفة ؟",
+
 };

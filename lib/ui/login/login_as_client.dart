@@ -205,7 +205,7 @@ class _LoginAsClientScreenState extends State<LoginAsClientScreen>
                                 : () async {
                                     if (formKey.currentState!.validate()) {
                                       await LoginCubit.get(context)
-                                          .LoginUsingEmailAndPassword()
+                                          .LoginUsingEmailAndPassword(context)
                                           .then((value) async {
                                         if (value is String) {
                                           myToast(
@@ -213,24 +213,11 @@ class _LoginAsClientScreenState extends State<LoginAsClientScreen>
                                             backgroundColor: Colors.redAccent,
                                           );
                                         } else {
-                                          UserCubit.get(context)
-                                              .SetNewToken(value["token"]);
-                                          print(value["token"]);
-                                          Map<String, dynamic> decodedToken =
-                                              decodeJwt(value["token"]);
-                                          UserCubit.get(context).GetUserData(context, decodedToken);
-                                          await UserCubit.get(context)
-                                              .GetUserAllData(
-                                                  context,
-                                                  UserCubit.get(context)
-                                                      .myUser
-                                                      .role);
-                                          await JobCubit.get(context)
-                                              .GetAllJobs(context);
                                           myToast(
-                                            msg: "Logged in successfully",
+                                            msg: SettingsCubit.get(context).currentLanguage["loggedSuccessful"],
                                             backgroundColor: Colors.green,
                                           );
+                                          while(Navigator.canPop(context))Navigator.pop(context);
                                           if (UserCubit.get(context)
                                                   .myUser
                                                   .role ==
@@ -247,7 +234,6 @@ class _LoginAsClientScreenState extends State<LoginAsClientScreen>
                                                     builder: (context) =>
                                                         ExploreCompanyScreen()));
                                           }
-                                          //print("Decoded : ${decodedToken}");
                                         }
                                       });
                                     } else {
@@ -262,7 +248,10 @@ class _LoginAsClientScreenState extends State<LoginAsClientScreen>
                             child: Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 14.0),
-                              child: Row(
+                              child: state
+                              is LoginWithEmailAndPasswordOnProgressState
+                                  ? CircularProgressIndicator()
+                                  : Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
@@ -322,31 +311,5 @@ class _LoginAsClientScreenState extends State<LoginAsClientScreen>
     });
   }
 
-  Map<String, dynamic> decodeJwt(String token) {
-    final parts = token.split('.');
-    if (parts.length != 3) {
-      throw Exception('Invalid token');
-    }
 
-    final payload = _decodeBase64(parts[1]);
-    final Map<String, dynamic> payloadMap = json.decode(payload);
-    return payloadMap;
-  }
-
-  String _decodeBase64(String str) {
-    String output = str.replaceAll('-', '+').replaceAll('_', '/');
-    switch (output.length % 4) {
-      case 0:
-        break;
-      case 2:
-        output += '==';
-        break;
-      case 3:
-        output += '=';
-        break;
-      default:
-        throw Exception('Illegal base64url string!');
-    }
-    return utf8.decode(base64Url.decode(output));
-  }
 }

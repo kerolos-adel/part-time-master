@@ -39,7 +39,6 @@ class NetworkDatabase{
     };
     final response =
     await http.get(Uri.parse(url), headers: headers);
-    print("Response : ${response.body}");
     return json.decode(response.body);
   }
 
@@ -54,8 +53,6 @@ class NetworkDatabase{
     };
     final response =
     await http.get(Uri.parse(url), headers: headers);
-    print(response.statusCode);
-    print(response.body);
 
     return json.decode(response.body);
   }
@@ -68,8 +65,6 @@ class NetworkDatabase{
     };
     final response =
     await http.get(Uri.parse(url), headers: headers);
-    print(response.statusCode);
-    print(response.body);
 
     return json.decode(response.body);
   }
@@ -102,10 +97,56 @@ class NetworkDatabase{
       "companyId": companyId
     };
     final body = json.encode(data);
-    final response =
-    await http.post(Uri.parse(url), headers: headers, body: body);
+    final response = await http.post(Uri.parse(url), headers: headers, body: body);
+    return response;
+  }
+
+  static Future UpdateJob({
+    required jobId,
+    required context,
+    required title,
+    required location,
+    required description,
+    required requirements,
+    required applyLink,
+    required ageFrom,
+    required ageTo,
+  }) async {
+    final url = 'https://part-time.azurewebsites.net/api/jobs/${jobId}';
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${UserCubit.get(context).myToken}'
+    };
+    final data = {
+      "title": title,
+      "location": location,
+      "description": description,
+      "requirements": requirements,
+      "applyLink": applyLink,
+      "ageFrom": ageFrom,
+      "ageTo": ageTo,
+    };
+    final body = json.encode(data);
+    final response = await http.put(Uri.parse(url), headers: headers, body: body);
     print(response.statusCode);
     print(response.body);
+
+    return response.statusCode;
+  }
+
+
+  static Future DeleteJob({
+    required jobId,
+    required context,
+  }) async {
+    final url = 'https://part-time.azurewebsites.net/api/jobs/${jobId}';
+    final headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${UserCubit.get(context).myToken}'
+    };
+    final response = await http.delete(Uri.parse(url), headers: headers);
+    print(response.statusCode);
+    return response.statusCode;
   }
 
 

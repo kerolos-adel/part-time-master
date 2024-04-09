@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:part_time/Persistent/Presistent.dart';
+import 'package:part_time/Widgets/bottom_nav_bar_for_company.dart';
 import 'package:part_time/cubit/job/cubit.dart';
 import 'package:part_time/cubit/job/states.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
 
-import '../../Widgets/bootom_nav_bar_client.dart';
-import '../../Widgets/bottom_nav_bar_for_company.dart';
-
-class AddJobScreen extends StatefulWidget {
-  const AddJobScreen({super.key});
+class EditJobScreen extends StatefulWidget {
+  int? index;
+  EditJobScreen({this.index});
 
   @override
-  State<AddJobScreen> createState() => _AddJobScreenState();
+  State<EditJobScreen> createState() => _EditJobScreenState();
 }
 
-class _AddJobScreenState extends State<AddJobScreen> {
+class _EditJobScreenState extends State<EditJobScreen> {
   final _formkey = GlobalKey<FormState>();
   DateTime? picked;
   DateTime? deadlineDateTimeStamp;
@@ -101,8 +99,6 @@ class _AddJobScreenState extends State<AddJobScreen> {
                             end: Alignment.centerRight,
                             stops: [.2, .9])),
                   ),
-
-
                 ),
                 body: Center(
                   child: Padding(
@@ -121,7 +117,7 @@ class _AddJobScreenState extends State<AddJobScreen> {
                               child: Padding(
                                 padding: EdgeInsets.all(8),
                                 child: Text(
-                                  SettingsCubit.get(context).currentLanguage["fillAllFieldsError"],
+                                  SettingsCubit.get(context).currentLanguage["editJobData"],
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 40,
@@ -197,7 +193,7 @@ class _AddJobScreenState extends State<AddJobScreen> {
                                     ? CircularProgressIndicator()
                                     : MaterialButton(
                                   onPressed: () async {
-                                    await JobCubit.get(context).PostJob(context);
+                                    await JobCubit.get(context).UpdateJob(context, widget.index);
                                   },
                                   color: Colors.black,
                                   elevation: 8,
@@ -211,7 +207,7 @@ class _AddJobScreenState extends State<AddJobScreen> {
                                       MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          SettingsCubit.get(context).currentLanguage["post"],
+                                          SettingsCubit.get(context).currentLanguage["save"],
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontWeight: FontWeight.bold,

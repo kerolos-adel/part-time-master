@@ -17,7 +17,6 @@ class UserCubit extends Cubit<UserStates>{
 
   void SetNewToken(newToken){
     myToken = newToken;
-    print("New Token has been set");
     emit(SetNewTokenState());
   }
 
@@ -25,21 +24,16 @@ class UserCubit extends Cubit<UserStates>{
     myUser = UserModel.FromJson(json);
     dynamic result = await NetworkDatabase.GetCompanyId(context, myUser.id);
     myUser.id = result["id"];
-    print(myUser.name);
-    print(myUser.email);
-    print(myUser.id);
   }
 
   Future GetUserAllData(context, role) async {
     if(role == "ROLE_COMPANY"){
       var result = await NetworkDatabase.GetUserData(context: context, id: UserCubit.get(context).myUser.id, isCompany: "/company");
-      print("Full Data : $result");
       myUserFullData = Company.FromJson(result);
     }
 
     else{
       var result = await NetworkDatabase.GetUserData(context: context, id: UserCubit.get(context).myUser.id);
-      print("Full Data : $result");
       myUserFullData = Person.FromJson(result);
     }
     emit(GetUserFullDataState());

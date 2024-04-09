@@ -1,5 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:part_time/cubit/job/cubit.dart';
+import 'package:part_time/cubit/settings/cubit.dart';
 import 'package:part_time/cubit/user/cubit.dart';
 import 'package:part_time/ui/login/choose_login.dart';
 
@@ -14,31 +16,31 @@ class BottomNavigationBarForClient extends StatelessWidget {
     showDialog(context: context, builder: (context) {
       return AlertDialog(
         backgroundColor: Colors.black54,
-        title: const Row(
+        title: Row(
           children: [
             Padding(padding: EdgeInsets.all(8),
               child: Icon(Icons.logout,color: Colors.white,size: 36,),
             ),
             Padding(padding: EdgeInsets.all(8),
-              child: Text("Sign Out",style:TextStyle(color:Colors.white,fontSize: 28,)),
+              child: Text(SettingsCubit.get(context).currentLanguage["signOut"],style:TextStyle(color:Colors.white,fontSize: 28,)),
             ),
           ],
         ),
-        content: const Text("Do you want to Log out?",style: TextStyle(
+        content: Text(SettingsCubit.get(context).currentLanguage["signOutConfirmMessage"],style: TextStyle(
           color: Colors.white,
           fontSize: 20,
         ),),
         actions: [
           TextButton(onPressed: () {
             Navigator.pop(context);
-          }, child: const Text('No',style:TextStyle(color: Colors.green,fontSize: 18) ,)),
+          }, child: Text(SettingsCubit.get(context).currentLanguage["no"],style:TextStyle(color: Colors.green,fontSize: 18) ,)),
           TextButton(onPressed: () {
             UserCubit.get(context).SignOut();
             while(Navigator.canPop(context)){
               Navigator.pop(context);
             }
             Navigator.push(context, MaterialPageRoute(builder: (context) => ChooseLogin()));
-          }, child: const Text('Yes',style:TextStyle(color: Colors.green,fontSize: 18) ,)),
+          }, child: Text(SettingsCubit.get(context).currentLanguage["yes"],style:TextStyle(color: Colors.green,fontSize: 18) ,)),
         ],
       );
     },);
@@ -64,8 +66,9 @@ class BottomNavigationBarForClient extends StatelessWidget {
           milliseconds: 300
       ),
       animationCurve: Curves.bounceInOut,
-      onTap: (index) {
+      onTap: (index) async {
         if(index==0){
+          await JobCubit.get(context).GetAllJobs(context);
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ExploreClientScreen(),));
         }
         else if(index==1){
