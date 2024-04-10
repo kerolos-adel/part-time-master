@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_time/cubit/job/cubit.dart';
 import 'package:part_time/cubit/job/states.dart';
@@ -7,7 +6,6 @@ import 'package:part_time/cubit/settings/cubit.dart';
 import 'package:part_time/cubit/settings/states.dart';
 import 'package:part_time/cubit/user/cubit.dart';
 import 'package:part_time/ui/edit_job/edit_job_screen.dart';
-import 'package:part_time/ui/explore/explore_comany_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class JobDetailsScreen extends StatefulWidget {

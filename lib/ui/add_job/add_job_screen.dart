@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:part_time/Persistent/Presistent.dart';
 import 'package:part_time/cubit/job/cubit.dart';
 import 'package:part_time/cubit/job/states.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
 
-import '../../Widgets/bootom_nav_bar_client.dart';
 import '../../Widgets/bottom_nav_bar_for_company.dart';
 
 class AddJobScreen extends StatefulWidget {

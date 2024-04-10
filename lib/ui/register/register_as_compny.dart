@@ -1,16 +1,12 @@
 import 'dart:io';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:part_time/cubit/register/cubit.dart';
 import 'package:part_time/cubit/register/states.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
 import 'package:part_time/shared/components/components.dart';
 import 'package:part_time/ui/login/login_as_client.dart';
-
 import '../../cubit/login/cubit.dart';
 import 'choose-register.dart';
 

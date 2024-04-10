@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_time/cubit/register/states.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
 import 'package:part_time/network/authentication.dart';
-import 'package:part_time/shared/components/components.dart';
 
 class RegisterCubit extends Cubit<RegisterStates>{
   RegisterCubit(): super(RegisterInitialState());

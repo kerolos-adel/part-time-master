@@ -5,12 +5,8 @@ import 'package:part_time/cubit/settings/cubit.dart';
 import 'package:part_time/cubit/user/cubit.dart';
 import 'package:part_time/ui/login/choose_login.dart';
 import 'package:part_time/ui/settings/settings_screen_for_company.dart';
-
 import '../ui/add_job/add_job_screen.dart';
-import '../ui/explore/explore_client_screen.dart';
 import '../ui/explore/explore_comany_screen.dart';
-import '../ui/search/search_client_screen.dart';
-import '../ui/settings/settings_screen_for_client.dart';
 
 class BottomNavigationBarForComapny extends StatelessWidget {
   BottomNavigationBarForComapny({super.key, required this.indexNum});

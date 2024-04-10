@@ -12,10 +12,13 @@ import 'package:part_time/shared/preferences/cache_helper.dart';
 import 'package:part_time/ui/splash/splash_screen.dart';
 
 void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
   ));
-  WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
 
   runApp(

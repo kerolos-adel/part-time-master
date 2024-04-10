@@ -6,8 +6,6 @@ import 'package:part_time/cubit/settings/states.dart';
 import 'package:part_time/shared/preferences/cache_helper.dart';
 import 'package:part_time/shared/styles/colors.dart';
 
-import '../../Widgets/bottom_nav_bar_for_company.dart';
-
 class SettingsClientScreen extends StatefulWidget {
   const SettingsClientScreen({super.key});
 

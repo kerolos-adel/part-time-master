@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
 import 'package:part_time/ui/login/login_as_compny.dart';
-import 'package:part_time/ui/register/register_as_client.dart';
 
 import '../register/choose-register.dart';
 import 'login_as_client.dart';

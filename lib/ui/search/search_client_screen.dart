@@ -3,9 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_time/cubit/explore/cubit.dart';
 import 'package:part_time/cubit/explore/states.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
-
 import '../../Widgets/bootom_nav_bar_client.dart';
-import '../../Widgets/bottom_nav_bar_for_company.dart';
 
 class SearchClientScreen extends StatefulWidget {
   const SearchClientScreen({super.key});

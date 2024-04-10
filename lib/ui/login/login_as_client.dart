@@ -3,7 +3,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:part_time/constants/assets/assets.dart';
-import 'package:part_time/cubit/job/cubit.dart';
 import 'package:part_time/cubit/login/cubit.dart';
 import 'package:part_time/cubit/login/states.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
@@ -12,9 +11,6 @@ import 'package:part_time/shared/components/components.dart';
 import 'package:part_time/ui/explore/explore_client_screen.dart';
 import 'package:part_time/ui/explore/explore_comany_screen.dart';
 import 'package:part_time/ui/login/choose_login.dart';
-import 'package:part_time/ui/person_layout/person_layout_screen.dart';
-import 'package:part_time/ui/register/register_as_client.dart';
-import 'dart:convert';
 import '../register/choose-register.dart';
 
 class LoginAsClientScreen extends StatefulWidget {

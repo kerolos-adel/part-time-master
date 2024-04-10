@@ -1,22 +1,17 @@
 import 'dart:convert';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:part_time/cubit/job/cubit.dart';
 import 'package:part_time/cubit/user/cubit.dart';
 import 'package:part_time/shared/components/components.dart';
 import 'package:part_time/ui/explore/explore_client_screen.dart';
 import 'package:part_time/ui/explore/explore_comany_screen.dart';
 import 'package:part_time/ui/register/choose-register.dart';
-
 import '../../constants/assets/assets.dart';
 import '../../cubit/login/cubit.dart';
 import '../../cubit/login/states.dart';
 import '../../cubit/settings/cubit.dart';
-import '../person_layout/person_layout_screen.dart';
-import '../register/register_as_client.dart';
 import 'choose_login.dart';
 
 class LoginAsCompany extends StatefulWidget {
