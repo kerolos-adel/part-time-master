@@ -1,13 +1,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:part_time/cubit/job/cubit.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
 import 'package:part_time/cubit/user/cubit.dart';
 import 'package:part_time/ui/login/choose_login.dart';
 
-import '../ui/add_job/add_job_screen.dart';
 import '../ui/explore/explore_client_screen.dart';
-import '../ui/search/search_client_screen.dart';
 import '../ui/settings/settings_screen_for_client.dart';
 
 class BottomNavigationBarForClient extends StatelessWidget {
@@ -65,7 +62,7 @@ class BottomNavigationBarForClient extends StatelessWidget {
           milliseconds: 300
       ),
       animationCurve: Curves.bounceInOut,
-      onTap: (index) async {
+      onTap: (index) {
         if(index==0){
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ExploreClientScreen(),));
         }

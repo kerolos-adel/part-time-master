@@ -1,21 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:part_time/Widgets/bootom_nav_bar_client.dart';
 import 'package:part_time/Widgets/bottom_nav_bar_for_company.dart';
-import 'package:part_time/Widgets/job_widget.dart';
-import 'package:part_time/constants/values/values.dart';
-import 'package:part_time/cubit/explore/cubit.dart';
-import 'package:part_time/cubit/explore/states.dart';
 import 'package:part_time/cubit/job/cubit.dart';
 import 'package:part_time/cubit/job/states.dart';
 import 'package:part_time/cubit/settings/cubit.dart';
 import 'package:part_time/models/job/job_model.dart';
-import 'package:part_time/shared/components/components.dart';
-import 'package:part_time/shared/styles/colors.dart';
 import 'package:part_time/ui/job_details/job_details_screen.dart';
-
-import '../../Persistent/Presistent.dart';
-import '../search/search_client_screen.dart';
 
 class ExploreCompanyScreen extends StatefulWidget {
   const ExploreCompanyScreen({super.key});
@@ -63,7 +53,7 @@ class _ExploreCompanyScreenState extends State<ExploreCompanyScreen> {
                     IconButton(
                         onPressed: () async {
                           await JobCubit.get(context).GetMyJobs(context);
-                        }, icon: Icon(Icons.refresh)
+                        }, icon: Icon(Icons.refresh, color: Colors.black,)
                     )
                   ],
                 ),
