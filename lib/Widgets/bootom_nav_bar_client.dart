@@ -60,7 +60,6 @@ class BottomNavigationBarForClient extends StatelessWidget {
         Icon(Icons.list,size: 19,color: Colors.black,),
         Icon(Icons.settings ,size: 19,color: Colors.black,),
         Icon(Icons.exit_to_app ,size: 19,color: Colors.black,),
-
       ],
       animationDuration: const Duration(
           milliseconds: 300
@@ -68,7 +67,6 @@ class BottomNavigationBarForClient extends StatelessWidget {
       animationCurve: Curves.bounceInOut,
       onTap: (index) async {
         if(index==0){
-          await JobCubit.get(context).GetAllJobs(context);
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ExploreClientScreen(),));
         }
         else if(index==1){
