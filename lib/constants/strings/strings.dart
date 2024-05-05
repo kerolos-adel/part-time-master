@@ -110,11 +110,9 @@ dynamic EnglishStrings = {
   "jobDeleted" : "Job has been deleted successfully",
   "jobUpdated" : "Job has been updated successfully",
   "editJobData" : "Edit Job Data",
-
-
   "deleteJob" : "Delete Job",
   "deleteJobConfirmMessage" : "Do you want to delete this job ?",
-
+  "loggInWrongCredentials" : "Incorrect Email or Password",
 };
 
 dynamic ArabicStrings = {
@@ -228,8 +226,8 @@ dynamic ArabicStrings = {
   "jobDeleted" : "تم حذف الوظيفة بنجاح",
   "jobUpdated" : "تم تعديل الوظيفة بنجاح",
   "editJobData" : "تعديل بيانات الوظيفة",
-
   "deleteJob" : "حذف الوظيفة",
   "deleteJobConfirmMessage" : "هل تريد حذف هذه الوظيفة ؟",
+  "loggInWrongCredentials" : "البريد الالكتروني او كلمة السر غير صحيحة",
 
 };

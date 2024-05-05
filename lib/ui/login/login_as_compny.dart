@@ -205,7 +205,7 @@ class _LoginAsCompanyState extends State<LoginAsCompany>
                                         .then((value) async {
                                       if (value is String) {
                                         myToast(
-                                          msg: value,
+                                          msg: SettingsCubit.get(context).currentLanguage["loggInWrongCredentials"],
                                           backgroundColor: Colors.redAccent,
                                         );
                                       }

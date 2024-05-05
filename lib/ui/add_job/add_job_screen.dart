@@ -34,6 +34,8 @@ class _AddJobScreenState extends State<AddJobScreen> {
     required TextEditingController controller,
     required bool enabled,
     required Function fan,
+    int? maxLines,
+    TextInputType keyboard = TextInputType.text,
     String? hint,
   }) {
     return Padding(
@@ -53,8 +55,8 @@ class _AddJobScreenState extends State<AddJobScreen> {
             enabled: enabled,
             key: ValueKey(valueKey),
             style: const TextStyle(color: Colors.white),
-            maxLines: valueKey == 'JobDescription' ? 3 : 1,
-            keyboardType: TextInputType.text,
+            maxLines: maxLines,
+            keyboardType: keyboard,
             decoration: InputDecoration(
               hintText: hint,
               hintStyle: TextStyle(
@@ -147,6 +149,7 @@ class _AddJobScreenState extends State<AddJobScreen> {
                                         controller: JobCubit.get(context).JobTitleController,
                                         enabled: true,
                                         fan: () {},
+                                        maxLines: 1,
                                       ),
                                       _textTitles(lable: SettingsCubit.get(context).currentLanguage["averageAge"]),
                                       _textFormFields(
@@ -155,6 +158,8 @@ class _AddJobScreenState extends State<AddJobScreen> {
                                         hint: SettingsCubit.get(context).currentLanguage["from"],
                                         enabled: true,
                                         fan: () {},
+                                        maxLines: 1,
+                                        keyboard: TextInputType.number,
                                       ),
                                       _textFormFields(
                                         valueKey: 'Age',
@@ -162,6 +167,8 @@ class _AddJobScreenState extends State<AddJobScreen> {
                                         hint: SettingsCubit.get(context).currentLanguage["to"],
                                         enabled: true,
                                         fan: () {},
+                                        maxLines: 1,
+                                        keyboard: TextInputType.number,
                                       ),
                                       _textTitles(lable: SettingsCubit.get(context).currentLanguage["jobDescription"]),
                                       _textFormFields(
@@ -169,6 +176,8 @@ class _AddJobScreenState extends State<AddJobScreen> {
                                         controller: JobCubit.get(context).JobDescriptionController,
                                         enabled: true,
                                         fan: () {},
+                                        maxLines: null,
+                                        keyboard: TextInputType.multiline,
                                       ),
                                       _textTitles(lable: SettingsCubit.get(context).currentLanguage["requirements"]),
                                       _textFormFields(
@@ -176,6 +185,8 @@ class _AddJobScreenState extends State<AddJobScreen> {
                                         controller: JobCubit.get(context).JobRequirementsController,
                                         enabled: true,
                                         fan: () {},
+                                        maxLines: null,
+                                        keyboard: TextInputType.multiline,
                                       ),
                                       _textTitles(lable: SettingsCubit.get(context).currentLanguage["applyLink"]),
                                       _textFormFields(
@@ -183,6 +194,7 @@ class _AddJobScreenState extends State<AddJobScreen> {
                                         controller: JobCubit.get(context).JobApplyLinkController,
                                         enabled: true,
                                         fan: () {},
+                                        maxLines: 1,
                                       ),
                                       Text(SettingsCubit.get(context).currentLanguage["applyLinkWarning"]),
                                     ],

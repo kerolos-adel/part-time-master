@@ -29,12 +29,14 @@ class LoginCubit extends Cubit<LoginStates>{
       emit(LoginWithEmailAndPasswordFaildState());
     }
     else{
-
       UserCubit.get(context).SetNewToken(result["token"]);
       Map<String, dynamic> decodedToken =
       decodeJwt(result["token"]);
-      UserCubit.get(context).GetUserData(context, decodedToken);
+      await UserCubit.get(context).GetUserData(context, decodedToken);
       await UserCubit.get(context).GetUserAllData(context, UserCubit.get(context).myUser.role);
+      // print(UserCubit.get(context).myUserFullData.name);
+      // print(UserCubit.get(context).myUserFullData.email);
+      // print(UserCubit.get(context).myUserFullData.id);
       if(UserCubit.get(context).myUser.role == "ROLE_USER")
         await JobCubit.get(context).GetAllJobs(context);
       else

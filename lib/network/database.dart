@@ -13,6 +13,8 @@ class NetworkDatabase{
     };
     final response =
     await http.get(Uri.parse(url), headers: headers);
+    print("Response : ${response.body}");
+    print("Decoded Response : ${json.decode(response.body)}");
     return json.decode(response.body);
   }
 
@@ -29,16 +31,20 @@ class NetworkDatabase{
 
   // Get My jobs
   static Future GetMyJobs({
-    required context,
+    required token,
+    required id,
   }) async {
-    print("ID: ${UserCubit.get(context).myUser.id}");
-    final url = 'https://part-time.azurewebsites.net/api/companies/${UserCubit.get(context).myUser.id}/jobs';
+    print("ID: ${id}");
+    final url = 'https://part-time.azurewebsites.net/api/companies/${id}/jobs';
     final headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${UserCubit.get(context).myToken}'
+      'Authorization': 'Bearer ${token}'
     };
     final response =
     await http.get(Uri.parse(url), headers: headers);
+    print(response.statusCode);
+    print("My Jobs Response : ${response.body}");
+
     return json.decode(response.body);
   }
 
@@ -65,7 +71,8 @@ class NetworkDatabase{
     };
     final response =
     await http.get(Uri.parse(url), headers: headers);
-
+    print("Response : ${response.body}");
+    print("Decoded Response : ${json.decode(response.body)}");
     return json.decode(response.body);
   }
 

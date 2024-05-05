@@ -76,7 +76,7 @@ class JobCubit extends Cubit<JobStates> {
         description: JobDescriptionController.text,
         requirements: JobRequirementsController.text,
         applyLink: JobApplyLinkController.text,
-        companyId: UserCubit.get(context).myUser.id,
+        companyId: UserCubit.get(context).myUserFullData.id,
         ageFrom: JobAgeFromController.text,
         ageTo: JobAgeToController.text);
     if (response.statusCode == 200) {
@@ -98,7 +98,10 @@ class JobCubit extends Cubit<JobStates> {
   Future GetMyJobs(context) async {
     emit(GetMyJobsOnProgressState());
     myJobs.clear();
-    var result = await NetworkDatabase.GetMyJobs(context: context);
+    var result = await NetworkDatabase.GetMyJobs(
+        token: UserCubit.get(context).myToken,
+        id: UserCubit.get(context).myUserFullData.id
+    );
     List<dynamic> jobsJson = result["_embedded"]["jobs"] as List<dynamic>;
     for (int i = 0; i < jobsJson.length; i++) {
       dynamic element = jobsJson[i];
